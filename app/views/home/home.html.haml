@@ -1,0 +1,10 @@
+%h3 Signups
+%ul
+	- @signups.each do |signup|
+		%li
+			%strong
+				#{signup.firstName} #{signup.lastName}
+			%br
+			= ( link_to signup.email, 'mailto:'+signup.email rescue '')
+			%br
+			%pre= signup.to_json
