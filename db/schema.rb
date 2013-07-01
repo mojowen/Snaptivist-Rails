@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130627070032) do
     t.string   "zip"
     t.text     "friends"
     t.text     "reps"
+    t.date     "photo_date"
     t.string   "photo_path"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

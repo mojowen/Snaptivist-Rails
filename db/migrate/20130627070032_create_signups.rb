@@ -8,7 +8,8 @@ class CreateSignups < ActiveRecord::Migration
     	t.string :twitter
     	t.string :zip
     	t.text :friends
-    	t.text :reps
+      t.text :reps
+    	t.date :photo_date
 
     	t.string :photo_path
 
