@@ -4,13 +4,13 @@ class Signup < ActiveRecord::Base
   	before_save :save_photo
 
   	def save_photo
-  		# Store the image in dropbox
   		# Upload to facebook asynchronously
 
-  		# unless photo.nil?
-	  	# 	File.open( 'shipping_label.png', 'wb') do|f|
-	  	# 		f.write( photo.read )
-	  	# 	end
-	  	# end
+  		unless photo.nil?
+	  		File.open( "tmp/#{created_at}.png", 'wb') do |f|
+	  			f.write( photo.read )
+	  		end
+	  		self.photo_path = "tmp/#{created_at}.png"
+	  	end
 	end
 end
