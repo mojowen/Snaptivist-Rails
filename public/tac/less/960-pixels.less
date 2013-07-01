@@ -1,0 +1,102 @@
+// Defining number of columns in the grid.
+// Common Values would be 12, 16 or 24
+@width:960px;  
+@def_grid:12;
+                                      
+.container(){    
+	clear:both;
+	margin:0 auto;
+	width:@width;
+}         
+                                      
+// Works out the width of elements based
+// on total number of columns and width
+// number of columns being displayed.
+// Removes 20px for margins
+.grid(@grid:@def_grid,@cols:'',@float:left,@display:inline){  
+  display:@display;
+  float:@float;
+  margin:0 10px;
+  width:(@width/@grid * @cols)-20;   
+}      
+
+// Allows for padding before element
+.prefix(@grid:@def_grid,@cols:''){  
+  padding-left:(@width/@grid * @cols);
+}    
+// Allows for padding after element
+.suffix(@grid:@def_grid,@cols:''){  
+  padding-right:(@width/@grid * @cols);          
+}        
+// Removes left margin
+.alpha(){
+  margin-left:0;
+}                     
+// Removes right margin
+.omega(){
+  margin-right:0;
+}   
+
+.push(@grid:@def_grid,@move:'') {
+  position:relative;
+  left:(@width/@grid * @move);
+} 
+   
+.pull(@grid:@def_grid,@move:'') {
+  position:relative;
+  left:(@width/@grid * @move) * -1;
+}
+
+.grid_1 {
+	.grid(@def_grid,1);
+}
+
+.grid_2 {
+	.grid(@def_grid,2);
+}
+
+.grid_3 {
+	.grid(@def_grid,3);
+}
+
+.grid_4 {
+	.grid(@def_grid,4);
+}
+
+.grid_5 {
+	.grid(@def_grid,5);
+}
+
+.grid_6 {
+	.grid(@def_grid,6);
+}
+
+.grid_7 {
+	.grid(@def_grid,7);
+}
+
+.grid_8 {
+	.grid(@def_grid,8);
+}
+
+.grid_8 {
+	.grid(@def_grid,8);
+}
+
+.grid_9 {
+	.grid(@def_grid,9);
+}
+
+.grid_10 {
+	.grid(@def_grid,10);
+}
+
+.grid_11 {
+	.grid(@def_grid,11);
+}
+
+.grid_12 {
+	.grid(@def_grid,12);
+}
+
+

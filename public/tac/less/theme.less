@@ -1,0 +1,416 @@
+@import url("colors.less");
+@import url("elements.less");
+@import url("960-pixels.less");
+@import url("font-awesome.less");
+@import url("font-awesome-ie7.less");
+@import url("typography.less");
+@import url("clearfix.less");
+
+/********* General Page Organization */
+* {
+	margin:0;
+	.box-sizing(border-box);
+}
+
+.wrapper {
+	.container();
+	min-width:960px;
+}
+
+.row {
+	width:100%;
+}
+
+
+/****** Universal ****/
+.hidden {
+	display:none !important;
+}
+
+.visible {
+	display:block !important;
+}
+
+.horizontal-list {
+	list-style-type:none;
+	
+	li {
+		display:inline-block;
+		float:left;
+	}
+}
+
+.user-info {
+	color:@red;
+	font-size:54px;
+	display:inline-block;
+	height:36px;
+	border-bottom:1px solid @red;
+}
+
+.big-number {
+	font-size:80px;
+}
+
+.button {
+	display:inline-block;
+	background-color:@red;
+	color:white;
+	padding:20px;
+	font-size:36px;
+	border-bottom:3px solid transparent;
+	
+	&:hover {
+		border-bottom:3px solid darken(@red, 20%); 
+	}
+	&:active {
+		background-color:darken(@red, 20%);
+	}
+}
+
+.sub-container {
+	.grid_8();
+	.push(12,2);
+}
+
+/****** Heder *******/
+
+header {
+	background-color:@gray;
+	padding:30px 0 10px;
+	
+	hgroup {
+/*		.push(12,1.25);
+*/	}
+	
+/*	.logo {
+		position:fixed;
+		top:35px;
+		width:80px;
+		.transition(1s,ease);
+	}*/
+
+	nav {
+		font-size:16px;
+		text-align:left;
+		ul {
+			padding:30px 0;
+			width:100%;
+			.grid_12();
+			margin-left:160px;			
+			
+			li {
+				.grid_2();
+				margin:0 40px;
+				position:relative;
+				color:@gray3;
+				
+				&:after {
+					content: " ";
+					background-image: url('../img/dots.png');
+					background-repeat: no-repeat;
+					right: -25px;
+					width:45px;
+					height:20px;
+					position:absolute;
+					
+				}
+				
+				&:before {
+					font-size:48px;
+					position:absolute;
+					left: -40px;
+					top: 12px;
+				}
+				
+				&:nth-child(1) {
+					margin-left:0;
+					
+					&:before {
+						content:"1";
+						left:-30px;
+					}
+				}
+				
+				&:nth-child(2) {					
+					&:before {
+						content:"2";
+					}
+				}
+				
+				&:nth-child(3) {					
+					&:before {
+						content:"3";
+					}
+					
+					&:after {
+						width:30px;
+						right:-30px;
+					}
+				}
+				
+				&:nth-child(4) {					
+					&:before {
+						content:"4";
+					}
+					&:after {
+						background:none;
+					}
+				}
+				
+				a {
+					color:@gray3;
+				}
+
+				&:hover, &.active {
+					color:@red !important;
+					.transition(.5s,ease);
+
+					a {
+						color:@red !important;
+						.transition(.5s,ease);
+						
+					}
+				}
+			}
+			
+		}
+	}
+}
+
+.fixed-header {
+	position:fixed;
+	top:-150px;
+	z-index:999;
+}
+
+
+/**** Arrows *****/
+
+.arrow {
+	position:relative;
+	top:-40px;
+	
+	.arrow-left, .arrow-right {
+		position:absolute;;
+		height: 40px;
+		background-color:@yellow;
+		width:47%;		
+	}
+	
+	.arrow-left {
+		&:before {
+			content:"";
+			position:absolute;
+			right:-40px;
+			border-left:40px solid @yellow;
+			border-top:40px solid transparent;
+		}
+	}
+	
+	.arrow-right {
+		right:0;
+		
+		&:before {
+			content:"";
+			position:absolute;
+			left:-40px;
+			border-right:40px solid @yellow;
+			border-top:40px solid transparent;
+		}
+	}
+
+	&.white {
+		.arrow-left, .arrow-right {
+			background-color:white !important;
+		}
+		
+		.arrow-left:before {
+			border-left:40px solid white;
+			border-top:40px solid transparent;
+		}
+		
+		.arrow-right:before {
+			border-right:40px solid white;
+			border-top:40px solid transparent;
+		}
+	}
+	
+	&.gray {
+		.arrow-left, .arrow-right {
+			background-color:@gray2 !important;
+		}
+		
+		.arrow-left:before {
+			border-left:40px solid @gray2;
+			border-top:40px solid transparent;
+		}
+		
+		.arrow-right:before {
+			border-right:40px solid @gray2;
+			border-top:40px solid transparent;
+		}
+	}
+}
+
+/***** Info Section *****/
+
+#info {
+	background: url('../img/info-bg.png') no-repeat;
+	background-size:cover;
+	background-attachment:fixed;
+	padding:0 0 75px 0;
+	
+	.welcome, .zipcode {
+		text-align:center;
+		
+		p {
+			color:@blue;
+		}		
+	}
+	
+	.welcome {
+		background:url(../img/dotted-line.png) no-repeat;
+		background-position:50% 100%; 
+		padding:25px 0 50px;
+	}
+	
+	.welcome p {
+		font-size: 54px;
+	}
+	
+	.zipcode p {
+		padding:0 0 25px 0;
+	}
+	
+	.zipcode {
+		background:url(../img/house.png) no-repeat;
+		background-size:60px;
+		background-position:36% 45%;
+	}
+}
+
+
+
+
+/******* Reps Section ******/
+
+
+#reps {
+	background-color:@yellow;
+	padding:50px 0 100px;
+	color:white;
+	
+	p {
+		color:white;
+	}
+	
+	.people {
+		.push(12,1.5);
+		.card {
+			.grid_3();
+			background-color:white;
+			border:1px solid #d2c86a;
+			padding:8px 8px 16px 8px;
+			
+			img {
+				border:1px solid rgb(185, 185, 185);
+				margin-bottom:16px;
+			}
+			
+			h3 {
+				color:#808080;
+				font-size:18px;
+				text-align:left;
+				margin:0;
+				padding:0 2px;
+			}
+		}
+	}
+}
+
+
+
+/***** Soundoff Section *****/
+#soundoff {
+	padding:50px 0 100px;
+	color:@red;
+
+	p {
+		color:@red;
+	}
+	
+	.button {
+		margin: 20px 0 0;
+	}
+	
+}
+
+
+/****** Share Section ******/
+#share {
+	background-color:@gray2;
+	padding:50px 0 50px;
+	color:@blue;
+	
+	p {
+		color:@blue;
+	}
+
+	.social-container {
+		margin:0 auto;
+		width:360px;
+		padding:20px 0;
+	}
+	.social {
+		width:100px;
+		height:100px;
+		.border-radius(100px);
+		background-color:black;
+		display:inline-block;
+		float:left;
+		margin: 0 20px 0 0;
+		background: url('../img/social-icons.png') no-repeat;
+		background-size:280px;
+		
+		&:hover {
+			.drop-shadow(0px, 2px, 1px, .3);
+		}
+		
+		&:active {
+			.inner-shadow(0px, 2px, 1px, .3);
+		}
+	}
+	
+	.facebook {
+		background-color:#3c5d96;
+		background-position: 30px 17px;
+	}
+	
+	.twitter {
+		background-color:#53c9fb;
+		background-position: -86px 17px;
+		
+	}
+	
+	.tumblr {
+		background-color: #304861;
+		background-position: -210px 12px;
+		
+	}
+}
+
+/****** Footer Section ******/
+footer {
+	background-color:@blue;
+	height:300px;
+	padding:30px 0;
+	
+	p {
+		color:white;
+		font-family:"Adobe Caslon", Georgia, serif;
+		font-size:16px;
+	}
+
+}
+
