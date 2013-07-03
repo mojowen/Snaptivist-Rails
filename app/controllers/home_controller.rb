@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+	protect_from_forgery :except => :save
+
 	def home
 		@signups = Signup.all
 	end
