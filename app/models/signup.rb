@@ -19,7 +19,7 @@ class Signup < ActiveRecord::Base
 	  		File.open( tmp_file_path, 'wb') do |f|
 	  			f.write( photo.read )
 	  		end
-	  		self.photo_path = '/'+tmp_file_name
+	  		self.photo_path = ENV['BASE_DOMAIN']+'/'+tmp_file_name
 	  	end
 	end
 
@@ -60,10 +60,8 @@ class Signup < ActiveRecord::Base
 		# album = me.albums.find{|f| f.name == event }
 		# album = me.album!( :name => event ) if album.nil?
 
-		begin
-			album.photo!( :source => tmp_file_path, :message => "#{firstName} #{lastName} at #{event}", :token => token )
-		rescue
-		end
+
+		album.photo!( :source => self.photo_path, :message => "#{firstName} #{lastName} at #{event}", :token => token )
 
 		photo = album.photos.find{ |fb_photo| fb_photo.name == "#{firstName} #{lastName} at #{event}" }
 
