@@ -10,7 +10,7 @@ class Signup < ActiveRecord::Base
 		[firstName,lastName,photo_date].join('_')+'.png'
   	end
   	def tmp_file_path
-		file = "tmp/#{tmp_file_name}"
+		file = "public/tmp/#{tmp_file_name}"
   	end
   	def save_photo
   		unless photo.nil?
@@ -61,7 +61,7 @@ class Signup < ActiveRecord::Base
 		# album = me.album!( :name => event ) if album.nil?
 
 		begin
-			album.photo!( :source => File.open( self.tmp_file_path ), :message => "#{firstName} #{lastName} at #{event}", :token => token )
+			album.photo!( :source => tmp_file_path, :message => "#{firstName} #{lastName} at #{event}", :token => token )
 		rescue
 		end
 

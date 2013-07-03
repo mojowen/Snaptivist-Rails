@@ -7,6 +7,6 @@ class HomeController < ApplicationController
 		render :json => {:success =>  signup.save, :signup => params[:signup] }
 	end
 	def photo
-		render :text => File.open( 'tmp/'+params[:photo_name]+'.png','rb' ).read
+		render :text => File.open( 'public/tmp/'+params[:photo_name]+'.png','rb' ).read
 	end
 end
