@@ -4,6 +4,8 @@
 		%li
 			%strong
 				#{signup.firstName} #{signup.lastName}
+			- unless signup.photo_path.nil?
+				%img{ :src => signup.photo_path }
 			%br
 			= ( link_to signup.email, 'mailto:'+signup.email rescue '')
 			%br
