@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627070032) do
+ActiveRecord::Schema.define(:version => 20130703022310) do
 
   create_table "signups", :force => true do |t|
     t.string   "firstName"
@@ -27,9 +27,20 @@ ActiveRecord::Schema.define(:version => 20130627070032) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "statuses", :force => true do |t|
+    t.integer  "signup_id"
+    t.string   "message"
+    t.boolean  "sent",       :default => false
+    t.text     "data",       :default => "{}"
+    t.string   "target"
+    t.string   "photo_path"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -38,10 +49,16 @@ ActiveRecord::Schema.define(:version => 20130627070032) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "authentication_token"
+    t.text     "twitter_token",          :default => "{}"
+    t.text     "facebook_token",         :default => "{}"
+    t.integer  "partner_id"
+    t.boolean  "admin",                  :default => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
