@@ -12,16 +12,16 @@ class Signup < ActiveRecord::Base
   	def tmp_file_path
 		file = "public/tmp/#{tmp_file_name}"
   	end
-  	def save_photo
-  		unless photo.nil?
-  			File.delete(tmp_file_path) if File.exists?( tmp_file_path )
+ #  	def save_photo
+ #  		unless photo.nil?
+ #  			File.delete(tmp_file_path) if File.exists?( tmp_file_path )
 
-	  		File.open( tmp_file_path, 'wb') do |f|
-	  			f.write( photo.read )
-	  		end
-	  		self.photo_path = ENV['BASE_DOMAIN']+'/'+tmp_file_name
-	  	end
-	end
+	#   		File.open( tmp_file_path, 'wb') do |f|
+	#   			f.write( photo.read )
+	#   		end
+	#   		self.photo_path = ENV['BASE_DOMAIN']+'/'+tmp_file_name
+	#   	end
+	# end
 
 	def sync
 		# Launch new thread
@@ -61,7 +61,7 @@ class Signup < ActiveRecord::Base
 		# album = me.album!( :name => event ) if album.nil?
 
 
-		album.photo!( :source => self.photo_path, :message => "#{firstName} #{lastName} at #{event}", :token => token )
+		album.photo!( :source => self.photo, :message => "#{firstName} #{lastName} at #{event}", :token => token )
 
 		photo = album.photos.find{ |fb_photo| fb_photo.name == "#{firstName} #{lastName} at #{event}" }
 
