@@ -1,7 +1,7 @@
 class Signup < ActiveRecord::Base
   	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :friends, :reps, :photo_date, :photo_path, :photo, :sendTweet, :event, :facebook_photo_link
 	attr_accessor :photo, :sendTweet, :event, :facebook_photo_link
-  	before_save :save_photo
+  	# before_save :save_photo
   	after_save :sync
 
   	has_many :statuses
@@ -61,7 +61,7 @@ class Signup < ActiveRecord::Base
 		# album = me.album!( :name => event ) if album.nil?
 
 
-		album.photo!( :source => self.photo, :message => "#{firstName} #{lastName} at #{event}", :token => token )
+		album.photo!( :source => self.photo.read, :message => "#{firstName} #{lastName} at #{event}", :token => token )
 
 		photo = album.photos.find{ |fb_photo| fb_photo.name == "#{firstName} #{lastName} at #{event}" }
 
