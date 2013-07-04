@@ -1,27 +1,22 @@
 class Signup < ActiveRecord::Base
   	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :friends, :reps, :photo_date, :photo_path, :photo, :sendTweet, :event, :facebook_photo_link
 	attr_accessor :photo, :sendTweet, :event, :facebook_photo_link
-  	# before_save :save_photo
+  	before_save :save_photo
   	after_save :sync
 
   	has_many :statuses
 
-  	def tmp_file_name
+  	def file_name
 		[firstName,lastName,photo_date].join('_')+'.png'
   	end
-  	def tmp_file_path
-		file = "public/tmp/#{tmp_file_name}"
-  	end
- #  	def save_photo
- #  		unless photo.nil?
- #  			File.delete(tmp_file_path) if File.exists?( tmp_file_path )
 
-	#   		File.open( tmp_file_path, 'wb') do |f|
-	#   			f.write( photo.read )
-	#   		end
-	#   		self.photo_path = ENV['BASE_DOMAIN']+'/'+tmp_file_name
-	#   	end
-	# end
+  	def save_photo
+
+  		unless photo.nil?
+			store =  AWS::S3::S3Object.store(file_name, photo, 'tac')
+	  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
+	  	end
+	end
 
 	def sync
 		# Launch new thread
@@ -43,30 +38,45 @@ class Signup < ActiveRecord::Base
 	end
 
 	def send_photo_to_facebook
+
+		event_deets = self.event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
+
+		if event_deets.length == 3
+			album_title = "#{event_deets[2]}: #{event_deets[0]} in #{event_deets[1]}"
+			album_description = "FUN. was in #{event_deets[1]} to play #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+			photo_description = "Photo from FUN. at #{event_deets[2]} in #{event_deets[1]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+		else
+			album_title = "#{event_deets[0]} in #{event_deets[1]}"
+			album_description = "FUN. was in #{event_deets[1]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+			photo_description = "Photo from FUN. at #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+		end
+
+
 		# could auto-tag... https://graph.facebook.com/search?q=zuck@fb.com&type=user&access_token=+token
-		# token = RestClient.get 'https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']
+		token = RestClient.get 'https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']
+		token.gsub!('access_token=','')
 		# page_token = 'https://graph.facebook.com/me/accounts?access_token='+token
 
 		event = 'Ally Coalition Test Albumn'
 
 		privacy = {'value' => 'CUSTOM', 'allow' => '40900695,577932694'}
-		token = ENV['TOKEN']
-		me = FbGraph::User.me( ENV['TOKEN'] )
-		album = me.albums.find{|f| f.name == event }
-		album = me.album!( :name => event, :privacy => privacy ) if album.nil?
+
+		me = FbGraph::User.me( token )
+		album = me.albums.find{|f| f.name == album_title }
+		album = me.album!( :name => album_title, :privacy => privacy, :message => photo_description) if album.nil?
 
 		# token = ENV['PAGE_TOKEN']
 		# me = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => token ).fetch
-		# album = me.albums.find{|f| f.name == event }
-		# album = me.album!( :name => event ) if album.nil?
+		# album = me.albums.find{|f| f.name == album_title }
+		# album = me.album!( :name => album_title, :message => photo_description ) if album.nil?
 
 
-		album.photo!( :source => self.photo.read, :message => "#{firstName} #{lastName} at #{event}", :token => token )
+		uploaded_photo = album.photo!( :url => photo_path, :message => photo_description, :token => token )
 
-		photo = album.photos.find{ |fb_photo| fb_photo.name == "#{firstName} #{lastName} at #{event}" }
+		facebook_photo = album.photos.find{ |fb_photo| fb_photo.identifier == uploaded_photo.identifier }
 
-		self.update_attributes( :photo_path => photo.source )
-		self.facebook_photo_link = photo.link
+		self.update_attributes( :photo_path => facebook_photo.source )
+		self.facebook_photo_link = facebook_photo.link
 	end
 
 	def send_tweets

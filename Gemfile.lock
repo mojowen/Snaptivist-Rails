@@ -31,6 +31,10 @@ GEM
     addressable (2.3.4)
     arel (3.0.2)
     attr_required (0.0.5)
+    aws-s3 (0.6.3)
+      builder
+      mime-types
+      xml-simple
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     cookiejar (0.3.0)
@@ -186,12 +190,14 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.1)
       rack (>= 1.0)
+    xml-simple (1.1.2)
     yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
   devise
   fb_graph
   foreman
