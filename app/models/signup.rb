@@ -8,7 +8,7 @@ class Signup < ActiveRecord::Base
 	attr_accessor :photo, :sendTweet, :event
 
   	has_many :statuses
-
+  	serialize :reps, :json
 
   	before_save :save_photo, :set_source
   	def save_photo
