@@ -11,6 +11,7 @@ class WelcomeMailer < ActionMailer::Base
     @facebook_photo = facebook_photo
     @email= email
   	@zip = zip
+    @event = event
 
     form_url
 
@@ -20,7 +21,7 @@ class WelcomeMailer < ActionMailer::Base
   def us_tweet(signup,event,facebook_photo=nil)
 
     @rep_list = signup.reps.map{ |r| [r['title'],r['firstName'],r['lastName'] ].join(' ') }.to_sentence
-  	@event_name = signup.event
+  	@event_name = event
   	@facebook_photo = facebook_photo
     @zip = signup.zip
     @email = signup.email

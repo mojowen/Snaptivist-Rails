@@ -65,8 +65,6 @@ class Signup < ActiveRecord::Base
 		ENV['TOKEN'] = token
 		# page_token = 'https://graph.facebook.com/me/accounts?access_token='+token
 
-		event = 'Ally Coalition Test Albumn'
-
 		privacy = {'value' => 'CUSTOM', 'allow' => '40900695,577932694'}
 
 		me = FbGraph::User.me( token )
