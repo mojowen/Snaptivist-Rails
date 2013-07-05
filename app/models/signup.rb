@@ -110,21 +110,21 @@ class Signup < ActiveRecord::Base
 		event_name = event_deets.length > 2 ? "@ #{event_deets[2]} in #{event_deets[1]}" : "in #{event_deets[1]}"
 
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
-			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo)
+			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
 			self.friends.split(',').each do |friend|
-				WelcomeMailer.canadian( friend, event_name, self.facebook_photo)
+				WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
 			end
 
 		else
 			if self.zip.length == 5 && self.sendTweet && self.reps.class == Array
-				WelcomeMailer.us_tweet( self, event_name, self.facebook_photo )
+				WelcomeMailer.us_tweet( self, event_name, self.facebook_photo ).deliver
 			else
-				WelcomeMailer.us_no_tweet( self.email, event_name, self.facebook_photo, self.zip )
+				WelcomeMailer.us_no_tweet( self.email, event_name, self.facebook_photo, self.zip ).deliver
 			end
 
 			self.friends.split(',').each do |friend|
-				WelcomeMailer.us_no_tweet( friend, event_name, self.facebook_photo )
+				WelcomeMailer.us_no_tweet( friend, event_name, self.facebook_photo ).deliver
 			end
 		end
 
