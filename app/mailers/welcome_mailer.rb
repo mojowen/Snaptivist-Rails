@@ -1,5 +1,5 @@
 class WelcomeMailer < ActionMailer::Base
-  default from: "info@theallycoalition.org"
+  default from: "Mike White <info@theallycoalition.org>"
 
   def canadian(email,event,facebook_photo=nil)
   	@facebook_photo = facebook_photo
