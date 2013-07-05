@@ -20,7 +20,7 @@ class WelcomeMailer < ActionMailer::Base
 
   def us_tweet(signup,event,facebook_photo=nil)
 
-    @rep_list = signup.reps.map{ |r| [r['title'],r['firstName'],r['lastName'] ].join(' ') }.to_sentence
+    @rep_list = signup.reps.map{ |r| [r['title'],r['first_name'],r['last_name'] ].join(' ') }.to_sentence
   	@event_name = event
   	@facebook_photo = facebook_photo
     @zip = signup.zip
