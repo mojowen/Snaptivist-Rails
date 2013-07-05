@@ -9,11 +9,7 @@ class Status < ActiveRecord::Base
 
 	  	if photo_path.nil? && ! signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
 
-		  	if signup.photo_path # If the file is still in the tmp directory - use it
-		  		photo = File.open( signup.photo_path )
-		  	else
-		  		photo = open( signup.photo_path) # If not - download it from facebook
-		  	end
+	  		photo = open( signup.photo_path) # If not - download it from facebook
 
 		  	self.data = Twitter.update_with_media( self.message, photo )
 		  	signup.statuses.reject{ |s| s == self }.each{ |s| s.update_attributes( :photo_path => self.data.media.first[:url] ) } # Attach the photo URL - already uplaoded to twitter
