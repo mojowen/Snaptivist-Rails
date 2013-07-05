@@ -7,10 +7,10 @@ class Status < ActiveRecord::Base
 
 	def send_tweet
 
-	  	if photo_path.nil? && !signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
+	  	if photo_path.nil? && ! signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
 
-		  	if File.exists?( signup.tmp_file_path ) # If the file is still in the tmp directory - use it
-		  		photo = File.open( signup.tmp_file_path )
+		  	if signup.photo_path # If the file is still in the tmp directory - use it
+		  		photo = File.open( signup.photo_path )
 		  	else
 		  		photo = open( signup.photo_path) # If not - download it from facebook
 		  	end
