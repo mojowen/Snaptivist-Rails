@@ -1,0 +1,19 @@
+%p Thank you.
+
+%p We loved just meeting you at the show #{@event_name}. And, thanks so much for speaking out out to #{@rep_list} about safe schools for all students.
+
+- if @facebook_photo
+	%p
+		Here is a link to your photo
+		= link_to @facebook_photo, @facebook_photo
+
+%p We have one more ask.  Our elected representatives want to hear from all of us.
+
+%p Please tweet from your personal account by simply clicking the button below.
+
+= render 'button'
+
+%p Thanks again,
+
+Mike/Jeb/Hannah
+The Ally Coalition
