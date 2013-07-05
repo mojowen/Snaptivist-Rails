@@ -7,13 +7,18 @@ class CreateSignups < ActiveRecord::Migration
     	t.string :email
     	t.string :twitter
     	t.string :zip
-    	t.text :friends
+      t.date :photo_date
+
+      t.text :friends
       t.text :reps
-    	t.date :photo_date
 
+      t.string :source
     	t.string :photo_path
+      t.string :facebook_photo
 
-      	t.timestamps
+      t.boolean :complete, :default => false
+
+    	t.timestamps
     end
   end
 end

@@ -1,8 +1,11 @@
 class Signup < ActiveRecord::Base
-  	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :friends, :reps, :photo_date, :photo_path, :photo, :sendTweet, :event, :facebook_photo_link
-	attr_accessor :photo, :sendTweet, :event, :facebook_photo_link
-  	before_save :save_photo
-  	after_save :sync
+
+  	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :photo_date, :complete,
+  		:friends, :reps,
+  		:photo_path, :facebook_photo, :source,
+  		:sendTweet, :event, :photo
+
+	attr_accessor :photo, :sendTweet, :event
 
   	has_many :statuses
 

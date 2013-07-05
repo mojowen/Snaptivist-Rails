@@ -19,12 +19,15 @@ ActiveRecord::Schema.define(:version => 20130703022310) do
     t.string   "email"
     t.string   "twitter"
     t.string   "zip"
+    t.date     "photo_date"
     t.text     "friends"
     t.text     "reps"
-    t.date     "photo_date"
+    t.string   "source"
     t.string   "photo_path"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "facebook_photo"
+    t.boolean  "complete",       :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "statuses", :force => true do |t|
