@@ -3,5 +3,4 @@ SnaptivistRails::Application.routes.draw do
 
   match '/save' => 'home#save'
   match '/' => 'home#home'
-  match '/:photo_name' => 'home#photo', :via => :get
 end
