@@ -98,7 +98,7 @@ class Signup < ActiveRecord::Base
 	end
 
 	def does_send_tweets
-		return ! self.reps.nil? && self.sendTweet && ! self.reps.empty?
+		return ! self.reps.nil? && ! self.reps.empty? && ( self.sendTweet.to_i != 0 rescue false)
 	end
 
 	def send_tweets
