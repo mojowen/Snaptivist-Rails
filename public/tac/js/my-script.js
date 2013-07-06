@@ -104,7 +104,7 @@ jQuery(document).ready(function($) {
 			if( errors.length > 1 ) return false
 			else {
 				saveSignup( params )
-				getReps(zip)
+				getReps( params.zip)
 			}
 		} else {
 			saveSignup( config )
