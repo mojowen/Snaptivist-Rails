@@ -13,13 +13,14 @@
         <link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" href="css/webfont.css">
 		<link rel="stylesheet" href="css/theme.css">
-
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 		<script src="js/jquery.localscroll-1.2.7.js"></script>
 		<script src="js/jquery.scrollTo-1.4.3.1.js"></script>
 		<script src="js/retina.js"></script>
+		<script src="http://www.soundoffatcongress.org/assets/widget_snippet.js"></script>
 		<script src="js/my-script.js"></script>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 
@@ -40,86 +41,139 @@
 
 		<nav class="clearfix">
 			<ul class="horizontal-list">
-				<li><a href="#1">Enter your ZIP Code</a></li>
-				<li><a href="#2">Find your Congressfolk</a></li>
-				<li><a href="#3">Tweet @ your Senators & Reps</a></li>
-				<li><a href="#4">Share with your friends</a></li>
+				<li>Enter your ZIP Code</li>
+				<li>Find your Congressfolk</li>
+				<li>Tweet @ your Senators & Reps</li>
+				<li>Share with your friends</li>
 			</ul>
 		</nav>
 	</div>
 </header>
 
 <div id="page">
-
 	<section id="info" class="row clearfix">
 		<div class="wrapper">
-			<div class="welcome">
-				<p>Hey, <span class="user-info">Noah</span>,</p>
-				<p>Good to see you again</p>  
-			</div> 
-		
-			<div class="zipcode">
-				<p>Looks like you live here:</p>
-				<span class="user-info">97214</span>
-				<p class="edit">[Click to edit]</p>
+
+			<div class="previous-user">
+				<div class="welcome">
+					<p class="user-name">Hey, <span class="user-info">Noah</span>,</p>
+					<p>Good to see you again</p>
+				</div>
+
+				<div class="zipcode">
+					<p>Looks like you live here:</p>
+					<span class="user-info">97214</span>
+					<p><a href="#" class="edit">[Click to edit]</a</p>
+				</div>
+				<a class="circle button go" href="#step2">Go</a>
+			</div>
+
+			<div class="new-user-1 welcome">
+				<p>Hi there. Want to help motivate your people in congress to support lgbtq equality through the magic of twitter?</p>
+				<a class="button" id="start">Get started</a>
+			</div>
+
+			<div class="new-user-2 welcome">
+				<p>1. Tell us about yourself</p>
+				<input type="text" name="firstName" placeholder="first name">
+				<input type="text" name="lastName" placeholder="last name">
+				<input type="text" name="email" placeholder="email">
+				<input type="text" name="zip" placeholder="zip">
+				<input type="hidden" name="source" value="Webform">
+				<a class="circle button go" href="#step2">Go</a>
 			</div>
 		</div>
 	</section> <!-- info -->
 
-	<div class="arrow yellow">
-		<div class="arrow-left"></div>
-		<div class="arrow-right"></div>
-	</div>
 
 	<section id="reps" class="row clearfix">
-	
+		<a name="step2" class="anchor"></a>
+		<div class="arrow yellow">
+			<div class="arrow-left"></div>
+			<div class="arrow-right"></div>
+		</div>
 		<div class="wrapper">
 			<span class="big-number">2</span>
-			<p>Which means these are your people in Congress</p>
-			
-			<div class="people">
-				<div class="card">
+			<p style="margin-top: 60px;">Which means these are your people in Congress</p>
+
+			<div class="people clearfix">
+				<div class="card rep_7" style="display:none;">
 					<img src="img/rep_1.jpg">
 					<h3>Senator #1</h3>
 					<h3>(D) | @Twitterhandle</h3>
 				</div>
-				
-				<div class="card">
+				<div class="card rep_5" style="display:none;">
+					<img src="img/rep_1.jpg">
+					<h3>Senator #1</h3>
+					<h3>(D) | @Twitterhandle</h3>
+				</div>
+				<div class="card rep_1"  style="display:none;">
+					<img src="img/rep_1.jpg">
+					<h3>Senator #1</h3>
+					<h3>(D) | @Twitterhandle</h3>
+				</div>
+
+				<div class="card rep_2"  style="display:none;">
 					<img src="img/rep_2.jpg">
 					<h3>Senator #2</h3>
-					<h3>(D) | @Twitterhandle</h3>					
+					<h3>(D) | @Twitterhandle</h3>
 				</div>
-				
-				<div class="card">
+
+				<div class="card rep_3"  style="display:none;">
 					<img src="img/rep_3.jpg">
 					<h3>Rep #1</h3>
 					<h3>(D) | @Twitterhandle</h3>
 				</div>
-				
-		</div>
+
+				<div class="card rep_4" style="display:none;">
+					<img src="img/rep_3.jpg">
+					<h3>Rep #1</h3>
+					<h3>(D) | @Twitterhandle</h3>
+				</div>
+				<div class="card rep_6" style="display:none;">
+					<img src="img/rep_3.jpg">
+					<h3>Rep #1</h3>
+					<h3>(D) | @Twitterhandle</h3>
+				</div>
+				<div class="arrow yellow">
+					<div class="arrow-left"></div>
+					<div class="arrow-right"></div>
+				</div>
+
+			</div>
+
+			<div class="bill">
+				<p>
+					Tell Your Congresspeople to cosponsor Safe School legislation: HR1625 / HR1199 in the House and S403 / S1088 in the Senate.
+				</p>
+			</div>
 	</section>
 
-	<div class="arrow white">
-		<div class="arrow-left"></div>
-		<div class="arrow-right"></div>
-	</div>
+	<section class="borders">
+		<span class="yellow"></span>
+		<!-- <span class="white"></span>
+		<span class="gray"></span> -->
+	</section>
 
 	<section id="soundoff" class="row clearfix">
+		<div class="arrow white">
+			<div class="arrow-left"></div>
+			<div class="arrow-right"></div>
+		</div>
 		<div class="wrapper">
 			<div class="sub-container">
 				<span class="big-number">3</span>
 				<p>Soundoff! Tweet at your Congresspeople to ask them to support this bill.</p>
-				<a class="button" href="#">#soundoff!</a>
+				<a class="button soundoff" href="#">#soundoff!</a>
 			</div>
 		</div>
 	</section>
 
-	<div class="arrow gray">
-		<div class="arrow-left"></div>
-		<div class="arrow-right"></div>
-	</div>
-
 	<section id="share" class="row clearfix">
+		<div class="arrow gray">
+			<div class="arrow-left"></div>
+			<div class="arrow-right"></div>
+		</div>
 		<div class="wrapper">
 			<div class="sub-container">
 				<span class="big-number">4</span>
@@ -141,8 +195,8 @@
 <footer class="row clearfix">
 	<div class="wrapper">
 		<div class="sub-container">
-			<p>Copyright © 2013 The Ally Coalition.</p>   
-			<p>The Ally Coalition will never sell, rent or exchange your email address. See our Privacy Policy for more information.</p> 
+			<p>Copyright © 2013 The Ally Coalition.</p>
+			<p>The Ally Coalition will never sell, rent or exchange your email address. See our Privacy Policy for more information.</p>
 			<p>33 Richdale Ave, Suite 121, Cambridge, MA 02140</p>
 			<p>501(c)3: 46-0585029 - See more at: http://www.theallycoalition.org/#sthash.8eGNX0Sj.dpuf</p>
 		</div>

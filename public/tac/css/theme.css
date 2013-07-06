@@ -2091,6 +2091,7 @@ html[xmlns] .clearfix {
 }
 .row {
   width: 100%;
+  position: relative;
 }
 /****** Universal ****/
 .hidden {
@@ -2138,7 +2139,11 @@ html[xmlns] .clearfix {
   position: relative;
   left: 160px;
 }
-/****** Heder *******/
+.anchor {
+  position: relative;
+  top: -108px;
+}
+/****** Header *******/
 header {
   background-color: #e1e2e7;
   padding: 30px 0 10px;
@@ -2214,19 +2219,7 @@ header nav ul li:nth-child(4):before {
 header nav ul li:nth-child(4):after {
   background: none;
 }
-header nav ul li a {
-  color: #808080;
-}
-header nav ul li:hover,
 header nav ul li.active {
-  color: #cd3737 !important;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-header nav ul li:hover a,
-header nav ul li.active a {
   color: #cd3737 !important;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -2241,7 +2234,11 @@ header nav ul li.active a {
 /**** Arrows *****/
 .arrow {
   position: relative;
-  top: -40px;
+  top: -90px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
 }
 .arrow .arrow-left,
 .arrow .arrow-right {
@@ -2297,6 +2294,14 @@ header nav ul li.active a {
   background-size: cover;
   background-attachment: fixed;
   padding: 0 0 75px 0;
+  min-height: 550px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+#info .welcome .user-name .user-info {
+  height: 52px;
 }
 #info .welcome,
 #info .zipcode {
@@ -2307,12 +2312,11 @@ header nav ul li.active a {
   color: #22234b;
 }
 #info .welcome {
-  background: url(../img/dotted-line.png) no-repeat;
-  background-position: 50% 100%;
   padding: 25px 0 50px;
 }
 #info .welcome p {
   font-size: 54px;
+  line-height: 60px;
 }
 #info .zipcode p {
   padding: 0 0 25px 0;
@@ -2321,6 +2325,88 @@ header nav ul li.active a {
   background: url(../img/house.png) no-repeat;
   background-size: 60px;
   background-position: 36% 45%;
+}
+.previous-user {
+  display: none;
+}
+.new-user-2 {
+  display: none;
+}
+.new-user-2 input {
+  clear: both;
+  display: block;
+  margin: 20px auto;
+  height: 50px;
+  background-color: #eaeaee;
+  font-family: "Wilma-Base";
+  padding: 12px;
+  border: 1px solid #a8abba;
+  width: 300px;
+  color: #cd3737;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.circle.button {
+  font-family: "Wilma-Base";
+  border: none;
+  padding: 28px 20px;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  -webkit-border-top-right-radius: 80px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 80px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-border-radius: 80px;
+  -moz-border-radius: 80px;
+  border-radius: 80px;
+}
+#reps,
+#share,
+#soundoff {
+  display: none;
+}
+/**** Borders *****/
+.borders span {
+  width: 100%;
+  display: block;
+  height: 20px;
+}
+.borders span.yellow {
+  background-color: #f8ed82;
+}
+.borders span.white {
+  background-color: white;
+}
+.borders span.gray {
+  background-color: #e1e2e7;
 }
 /******* Reps Section ******/
 #reps {
@@ -2334,6 +2420,8 @@ header nav ul li.active a {
 #reps .people {
   position: relative;
   left: 120px;
+  clear: both;
+  padding: 0 0 20px 0;
 }
 #reps .people .card {
   display: inline;
@@ -2347,6 +2435,8 @@ header nav ul li.active a {
 #reps .people .card img {
   border: 1px solid #b9b9b9;
   margin-bottom: 16px;
+  width: 202px;
+  height: 252px;
 }
 #reps .people .card h3 {
   color: #808080;
@@ -2354,6 +2444,39 @@ header nav ul li.active a {
   text-align: left;
   margin: 0;
   padding: 0 2px;
+}
+#reps .bill {
+  position: relative;
+  left: 120px;
+  display: inline;
+  float: left;
+  margin: 0 10px;
+  width: 700px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0 20px 20px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+#reps .bill p {
+  color: white;
+  text-align: left;
 }
 /***** Soundoff Section *****/
 #soundoff {
@@ -2423,7 +2546,7 @@ header nav ul li.active a {
   background-position: 30px 17px;
 }
 #share .twitter {
-  background-color: #53c9fb;
+  background-color: #00aae5;
   background-position: -86px 17px;
 }
 #share .tumblr {

@@ -19,6 +19,7 @@
 
 .row {
 	width:100%;
+	position:relative;
 }
 
 
@@ -73,7 +74,12 @@
 	.push(12,2);
 }
 
-/****** Heder *******/
+.anchor {
+	position:relative;
+	top: -108px;
+}
+
+/****** Header *******/
 
 header {
 	background-color:@gray;
@@ -158,19 +164,10 @@ header {
 					}
 				}
 				
-				a {
-					color:@gray3;
-				}
-
-				&:hover, &.active {
+				&.active {
 					color:@red !important;
 					.transition(.5s,ease);
 
-					a {
-						color:@red !important;
-						.transition(.5s,ease);
-						
-					}
 				}
 			}
 			
@@ -189,7 +186,8 @@ header {
 
 .arrow {
 	position:relative;
-	top:-40px;
+	top:-90px;
+	.transition(1s,ease);
 	
 	.arrow-left, .arrow-right {
 		position:absolute;;
@@ -260,6 +258,8 @@ header {
 	background-size:cover;
 	background-attachment:fixed;
 	padding:0 0 75px 0;
+	min-height:550px;
+	.transition(.5s,ease);
 	
 	.welcome, .zipcode {
 		text-align:center;
@@ -270,13 +270,12 @@ header {
 	}
 	
 	.welcome {
-		background:url(../img/dotted-line.png) no-repeat;
-		background-position:50% 100%; 
 		padding:25px 0 50px;
 	}
 	
 	.welcome p {
 		font-size: 54px;
+		line-height:60px;
 	}
 	
 	.zipcode p {
@@ -290,8 +289,61 @@ header {
 	}
 }
 
+.previous-user { display:none; }
 
+.new-user-1 {
+}
 
+.new-user-2 {
+	display:none;
+	
+	input {
+		clear:both;
+		display:block;
+		margin:20px auto;
+		height:50px;
+		background-color:lighten(@gray,3%);
+		font-family:"Wilma-Base";
+		padding:12px;
+		border:1px solid darken(@gray, 20%);
+		width:300px;
+		color:@red;
+		.border-radius(3px);
+	}
+	
+	.circle {
+		font-family:"Wilma-Base";
+		border:none;
+		padding:28px 20px;
+		width:80px;
+		height:80px;
+		display:inline-block;
+		.border-radius(80px);
+	}
+	
+}
+
+#reps, #share, #soundoff { display:none; }
+
+/**** Borders *****/
+.borders {
+	span {
+		width:100%;
+		display:block;
+		height:20px;
+	&.yellow {
+		background-color:@yellow;
+	}
+	
+	&.white {
+		background-color:white;
+	}
+	
+	&.gray {
+		background-color:@gray;
+	}
+	}
+}
 
 /******* Reps Section ******/
 
@@ -307,6 +359,8 @@ header {
 	
 	.people {
 		.push(12,1.5);
+		clear:both;
+		padding:0 0 20px 0;
 		.card {
 			.grid_3();
 			background-color:white;
@@ -325,6 +379,19 @@ header {
 				margin:0;
 				padding:0 2px;
 			}
+		}
+	}
+	
+	.bill {
+		.push(12,1.5);
+		.grid_9();
+		background-color:rgba(0,0,0,.1);
+		border:1px solid rgba(0,0,0,.2);
+		padding:0 20px 20px;
+		.border-radius(3px);
+		p {
+			color:white;
+			text-align:left;
 		}
 	}
 }
@@ -388,7 +455,7 @@ header {
 	}
 	
 	.twitter {
-		background-color:#53c9fb;
+		background-color:#00aae5;
 		background-position: -86px 17px;
 		
 	}
