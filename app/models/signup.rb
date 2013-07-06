@@ -9,18 +9,26 @@ class Signup < ActiveRecord::Base
 
   	has_many :statuses
 
-  	before_save :save_photo, :set_source
+  	before_save :save_photo, :set_source, :handle_webform
   	def save_photo
   		unless complete
 	  		unless photo.nil?
+	  			puts "Uploading photo to S3 at #{DateTime.now}"
 				store =  AWS::S3::S3Object.store(file_name, photo, 'tac')
 		  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
 		  		self.photo = nil
+		  		puts "Completed uploading photo to S3 at #{DateTime.now}"
 		  	end
 	  	end
 	end
 	def set_source
 		self.source = event.gsub("\t"," ") if event && ! complete
+	end
+	def handle_webform
+		if self.source.downcase == 'webform'
+			save_to_fanbridge
+			self.complete = true
+		end
 	end
 
 
