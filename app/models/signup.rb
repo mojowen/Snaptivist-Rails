@@ -105,8 +105,6 @@ class Signup < ActiveRecord::Base
 	def send_emails
 		event_deets = self.event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
 
-		event_name = event_deets.length > 2 ? "@ #{event_deets[2]} in #{event_deets[1]}" : "in #{event_deets[1]}"
-
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
@@ -118,7 +116,7 @@ class Signup < ActiveRecord::Base
 			if self.zip.length == 5 && self.sendTweet && self.reps.class == Array
 				WelcomeMailer.us_tweet( self, event_name, self.facebook_photo ).deliver
 			else
-				WelcomeMailer.us_no_tweet( self.email, event_name, self.facebook_photo, self.zip ).deliver
+				WelcomeMailer.us_no_tweet( self, event_name, self.facebook_photo ).deliver
 			end
 
 			self.friends.split(',').each do |friend|
