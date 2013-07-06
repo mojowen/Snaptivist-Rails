@@ -6,8 +6,8 @@ jQuery(document).ready(function($) {
 
 	for (var i = search.length - 1; i >= 0; i--) {
 		var param = search[i].split('=')
-		config[ param[0] ] = param[1];
-		$('input[name='+param[0]+']').val( param[1] )
+		config[ param[0] ] = unescape( param[1] );
+		$('input[name='+param[0]+']').val( unescape( param[1] ) );
 	};
 	if( typeof config.firstName != 'undefined' && typeof config.email != 'undefined' && typeof config.zip != 'undefined' ) {
 		var $known_user = $('.previous-user').show();
