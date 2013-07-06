@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
 	protect_from_forgery :except => :save
+	before_filter :require_login, :only => [:list,:analytics]
 
 	def home
 		@body_class = 'home'
@@ -11,13 +12,11 @@ class HomeController < ApplicationController
 
 
 	def analytics
-		require_login
 		@title = 'ANALYTICS'
 		@signups = Signup.all
 		@by_show = Signup.all.group_by(&:source)
 	end
 	def list
-		require_login
 
 		case params[:type]
 			when 'tweets'

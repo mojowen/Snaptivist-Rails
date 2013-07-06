@@ -18,7 +18,7 @@
 
 		#footer
 			- if current_user
-				= link_to( 'logout',analytics_path )
+				= link_to( 'logout',destroy_user_session_path )
 				= link_to( 'analytics',analytics_path )
 			- else
 				= link_to( 'login', new_user_session_path)
