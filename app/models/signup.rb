@@ -59,12 +59,14 @@ class Signup < ActiveRecord::Base
 		event_deets = self.event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
 
 		if event_deets.length == 3
-			album_title = "#{event_deets[2]}: #{event_deets[0]} in #{event_deets[1]}"
-			album_description = "FUN. was in #{event_deets[1]} to play #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
-			photo_description = "Photo from FUN. at #{event_deets[2]} in #{event_deets[1]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+			city = event_deets[1].split(', ')[0]
+			album_title = "#{event_deets[2]}: #{event_deets[0]} in #{city}"
+			album_description = "FUN. was in #{city} to play #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+			photo_description = "Photo from FUN. at #{event_deets[2]} in #{city}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
 		else
-			album_title = "#{event_deets[0]} in #{event_deets[1]}"
-			album_description = "FUN. was in #{event_deets[1]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+			city = event_deets[1].split(', ')[0]
+			album_title = "#{event_deets[0]} in #{city}"
+			album_description = "FUN. was in #{city}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
 			photo_description = "Photo from FUN. at #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
 		end
 
