@@ -84,7 +84,7 @@ jQuery(document).ready(function($) {
 	});
 	$('.go').click(function(e){
 		var $this = $(this);
-		if( $this.attr('href') == '#step2' ) {
+		if( $this.hasClass('new-user-3') ) {
 			var errors = [],
 				params = {}
 			$this.parent().find('input[type=text]').each( function() {
@@ -106,6 +106,8 @@ jQuery(document).ready(function($) {
 				saveSignup( params )
 				getReps(zip)
 			}
+		} else {
+			saveSignup( config )
 		}
 		$('#share').delay(0).slideDown('slow');
 		$('#soundoff').delay(100).slideDown('slow');
@@ -155,9 +157,9 @@ jQuery(document).ready(function($) {
 			if( reps.length > 3 ) $('.people').css({ left: ( 120 - ( reps.length - 3 ) * 125 ), width: (reps.length * 250) })
 		}
 	}
-	function saveSignup() {
+	function saveSignup(params) {
 		params['source'] = 'webform'
-		$.post( '/save', params,function(r) { console.log(r) })
+		$.post( '/save', { signup: params} )
 	}
 
 });

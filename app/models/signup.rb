@@ -25,7 +25,7 @@ class Signup < ActiveRecord::Base
 		self.source = event.gsub("\t"," ") if event && ! complete
 	end
 	def handle_webform
-		if self.source.downcase == 'webform'
+		if (self.source ||).downcase == 'webform'
 			save_to_fanbridge
 			self.complete = true
 		end
