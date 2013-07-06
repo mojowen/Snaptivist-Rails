@@ -124,13 +124,25 @@ jQuery(document).ready(function($) {
 		var config = {campaign: 61}
 		config.zip = $('input[name=zip]').val()
 		config.email = $('input[name=email]').val()
-		config.page_url = document.location.toString()
+		config.page_url = 'http://theallycoalition.org/soundoff'
 		config.top = '200'
 		openSoundOff(config)
 
 		return false;
 	})
-	$('.card img').onerror( function(e) { $(this).remove(); });
+	//$('.card img').error(function(e) { $(this).remove(); });
+	$('.social.facebook').click( function(){
+		window.open('https://www.facebook.com/sharer/sharer.php?u=http://theallycoalition.org/soundoff','fbsharer','toolbar=0,status=0,width=300,height=200');
+		return false
+	})
+	$('.social.tumblr').click( function(){
+		window.open('http://www.tumblr.com/share/link?url=www.theallycoalition.org/soundoff/&name=I+told+my+Congressional+Reps+to+support+safe+schools,+you+should+too','tumbsharer','toolbar=0,status=0,width=300,height=200');
+		return false
+	})
+	$('.social.twitter').click( function(){
+		window.open("https://twitter.com/intent/tweet?&text=I+told+my+Congressional+Reps+to+support+safe+schools,+you+should+too:&url=http://theallycoalition.org/soundoff&related=allycoalition&via=allycoalition&hashtags=soundoff,mostnights",'twittershare','toolbar=0,status=0,width=300,height=200');
+		return false
+	})
 
 	$(window).scrollTo(150, 'slow');
 
