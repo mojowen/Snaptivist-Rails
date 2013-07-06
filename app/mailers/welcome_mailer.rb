@@ -31,13 +31,13 @@ class WelcomeMailer < ActionMailer::Base
 
   def form_url signup=nil,email=nil, reps=nil
     @form_url = "http://theallycoalition.org/soundoff?"
-    @form_url =+"&email=#{email}" unless email.nil?
-    @form_url =+"&reps=#{reps}" unless reps.nil?
+    @form_url += "&email=#{email}" unless email.nil?
+    @form_url += "&reps=#{reps}" unless reps.nil?
 
-    if ! signup.nil? && signup_or_email.class == Signup
-      @form_url =+ "&zip=#{signup.zip}" if signup.zip
-      @form_url =+ "&firstName=#{signup.firstName}" if signup.firstName
-      @form_url =+ "&lastName=#{signup.lastName}" if signup.lastName
+    if ! signup.nil? && signup.class == Signup
+      @form_url += "&zip=#{signup.zip}" if signup.zip
+      @form_url += "&firstName=#{signup.firstName}" if signup.firstName
+      @form_url += "&lastName=#{signup.lastName}" if signup.lastName
     end
 
   end
