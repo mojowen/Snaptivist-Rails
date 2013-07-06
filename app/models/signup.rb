@@ -28,6 +28,7 @@ class Signup < ActiveRecord::Base
 		if (self.source || '' ).downcase == 'webform'
 			save_to_fanbridge
 			self.complete = true
+			self.photo_date = DateTime.now
 		end
 	end
 
@@ -169,6 +170,13 @@ class Signup < ActiveRecord::Base
   	def file_name
 		[firstName,lastName,photo_date].join('_')+'.png'
   	end
-
-
+  	def friend_count
+  		return (friends || '').split(',').count
+  	end
+  	def tweet_count
+  		return statuses.reject{ |d| d.data.empty? }.count
+  	end
+  	def zip_code
+  		return zip
+  	end
 end

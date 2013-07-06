@@ -1,0 +1,31 @@
+%h1 Analytics
+
+.top_line
+	%h2 Total Signups: #{ @signups.count }
+	%h2 Total Photos: #{ @signups.reject{ |s| s.photo_path.nil? }.count }
+	%h2 Total Emails: #{ @signups.map{|s| (s.friends || '').split(',').length + 1 }.sum }
+	.help (includes friends' emails)
+	%h2 Total Tweets: #{ Status.count }
+
+.signup_options
+	%p
+		= link_to 'see signups', list_path
+		= link_to 'see tweets', list_path+'?type=tweets'
+		= link_to 'see emails', list_path+'?type=emails'
+	%p
+		= link_to 'download signups', list_path+'?export'
+		= link_to 'download tweets', list_path+'?type=tweets&export'
+		= link_to 'download emails', list_path+'?type=emails&export'
+%br
+%br
+
+%h1 Broken-down By Show
+
+- @by_show.each do |show,data|
+	%h2= show || '(No Source Data)'
+
+	.top_line
+		%h3 Signups: #{ data.count }
+		%h3 Photos: #{ data.reject{ |s| s.photo_path.nil? }.count }
+		%h3 Emails: #{data.map{|s| (s.friends || '').split(',').length + 1 }.sum }
+		%h3 Tweets: #{ data.map{ |s| s.statuses.count }.sum }

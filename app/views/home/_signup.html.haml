@@ -1,0 +1,21 @@
+.item
+	%h3 #{item.firstName} #{item.lastName}
+	%a{ :href => item.photo_path, :target => '_blank' }
+		%img.small_photo{ :src => item.photo_path }
+	%p From #{ item.source } on #{ item.photo_date }
+	%p
+		Email: #{ link_to item.email, 'mailto:'+item.email } Zip: #{ item.zip }
+		- unless  item.twitter.nil? || item.twitter.empty?
+			Twitter:
+			= link_to '@'+item.twitter, 'http://twitter.com/'+item.twitter
+
+	.stuff
+		- if (item.friends || '' ).split(',').count > 0
+			%h4 Frends
+			- (item.friends || '' ).split(',').each do |friend|
+				= render 'email', :item => friend
+		- if item.statuses.reject{ |i| i.data.empty? || i.data.nil? }.count > 0
+			%h4 Sent Tweets
+			- item.statuses.each do |status|
+				- unless status.data.empty?
+					= render 'tweet', :item => status

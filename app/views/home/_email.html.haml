@@ -1,0 +1,15 @@
+.email
+	- if item.class == String
+		.col= link_to item, 'mailto:'+item
+	- else
+		.col= link_to item[:email], 'mailto:'+item[:email]
+		&#09;
+		.col= item[:firstName] if item[:firstName]
+		&#09;
+		.col= item[:lastName] if item[:lastName]
+		&#09;
+		.col= item[:zip] if item[:zip]
+		&#09;
+		.col= item[:source] if item[:source]
+		&#09;
+		.col= item[:created_at] if item[:created_at]

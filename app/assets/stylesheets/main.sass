@@ -1,0 +1,39 @@
+@import 'mixins.sass'
+@import 'vars.sass'
+
+body
+	font-family: Helvetica, sans-serif
+	background: $yellow
+	color: $grey
+	font-size: 13px
+
+	button, input[type=submit]
+		@include button
+
+body > *
+	box-sizing: border-box
+	-moz-box-sizing: border-box
+	-webkit-box-sizing: border-box
+
+a
+	&, &:link, &:visited, &:hover
+		color: $grey
+
+h1,h2,h3,h4,h5
+	text-transform: uppercase
+
+#main
+	margin: 0 auto
+	width: 900px
+	background: $bg
+	padding: 50px
+#footer
+	position: fixed
+	bottom: 0
+	font-size: 12px
+	text-align: right
+	right: 0
+
+
+@import 'home.sass'
+@import 'analytics.sass'

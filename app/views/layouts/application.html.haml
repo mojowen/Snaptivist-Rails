@@ -2,14 +2,23 @@
 %html
 	%head
 
+		%title= (@title +' | SNAPTIVIST' rescue 'SNAPTIVIST')
 		= stylesheet_link_tag    "application", :media => "all"
 		:javascript
 			var $naptivist_config = #{ ( @config || {} ).to_json }
 		= javascript_include_tag "application"
 		= csrf_meta_tags
+		%link{ :rel => "icon shortcut", :href => image_path('icon.png') }
 
 	%body{ :class => "#{@body_class}" }
 		#header
 
 		#main
 			= yield
+
+		#footer
+			- if current_user
+				= link_to( 'logout',analytics_path )
+				= link_to( 'analytics',analytics_path )
+			- else
+				= link_to( 'login', new_user_session_path)

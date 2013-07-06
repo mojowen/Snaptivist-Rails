@@ -1,0 +1,17 @@
+:css
+	table tr td {
+		width: 200px;
+		word-wrap:break-word;
+		word-break: break-all;
+	}
+:javascript
+	(function(){ alert('Copy and paste into Excel or Google Docs')})()
+
+%table
+	%tr
+		- @title_row.each do |label|
+			%th= label
+	- @items.each do |item|
+		%tr
+			- @mapping.each do |line|
+				%td= ( (item.send(line) rescue nil) || item[line] || item[line.to_sym] )

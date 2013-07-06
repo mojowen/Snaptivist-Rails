@@ -1,12 +1,10 @@
-%h3 Signups
-%ul
-	- @signups.each do |signup|
-		%li
-			%strong
-				#{signup.firstName} #{signup.lastName}
-			- unless signup.photo_path.nil?
-				%img{ :src => signup.photo_path }
-			%br
-			= ( link_to signup.email, 'mailto:'+signup.email rescue '')
-			%br
-			%pre= signup.to_json
+%h1
+	.top SNAP
+	TIVIST
+
+.description
+	%p Is a mobile app that takes photos and sends them to members of Congress and your Facebook page.
+	%p
+		If you're interested in learning more
+		= link_to 'you should signup and we\'ll be in touch', 'https://docs.google.com/forms/d/1sNabSshhmORJk0u_0GCFhxvn2odakWFynmf5IYk9o7M/viewform'
+		\.

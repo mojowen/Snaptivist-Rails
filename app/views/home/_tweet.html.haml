@@ -1,0 +1,6 @@
+%blockquote.twitter-tweet
+	%p= item.data['text']
+	#{item.data['user']['name']} (@#{item.data['user']['screen_name']})
+	= link_to item.data['created_at'].split(' ').slice(0,3).join(' '), "https://twitter.com/#{item.data['user']['screen_name']}/itemes/#{ item.data['id'] }"
+:javascript
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

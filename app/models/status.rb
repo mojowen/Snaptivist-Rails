@@ -31,5 +31,8 @@ class Status < ActiveRecord::Base
 		self.sent = true
 		self.save
 	end
-
+	def sender
+		return signup.twitter unless signup.twitter.nil? || signup.twitter.empty?
+		return signup.firstName
+	end
 end
