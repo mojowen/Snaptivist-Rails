@@ -130,6 +130,7 @@ jQuery(document).ready(function($) {
 
 		return false;
 	})
+	$('.card img').onerror( function(e) { $(this).remove(); });
 
 	$(window).scrollTo(150, 'slow');
 
