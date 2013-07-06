@@ -112,6 +112,7 @@ class Signup < ActiveRecord::Base
 
 	def send_emails
 		event_deets = self.event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
+		event_name = event_deets[1].split(', ').first
 
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
