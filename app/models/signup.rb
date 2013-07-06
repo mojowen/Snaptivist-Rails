@@ -117,7 +117,6 @@ class Signup < ActiveRecord::Base
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
-			self.friends.split(',').each do |friend|
 				WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
 			end
 
@@ -128,7 +127,7 @@ class Signup < ActiveRecord::Base
 				WelcomeMailer.us_no_tweet( self, event_name, self.facebook_photo ).deliver
 			end
 
-			self.friends.split(',').each do |friend|
+			(self.friends || '').split(',').each do |friend|
 				WelcomeMailer.us_no_tweet( friend, event_name, self.facebook_photo ).deliver
 			end
 		end
