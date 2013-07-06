@@ -70,23 +70,23 @@ class Signup < ActiveRecord::Base
 			photo_description = "Photo from FUN. at #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
 		end
 
-		token = RestClient.get('https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']).gsub!('access_token=','')
+		page_token = Rails.cache.read('page_token') || ENV['PAGE_TOKEN']
 
-		ENV['TOKEN'] = token
-		# page_token = 'https://graph.facebook.com/me/accounts?access_token='+token
+		begin
+			me = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => page_token ).fetch
+		rescue
+			token = RestClient.get('https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']).gsub!('access_token=','')
+			page_token = JSON::parse( RestClient.get('https://graph.facebook.com/me/accounts?access_token='+token) )
+			page_token = page_token['data'].find{ |f| f['id'] == ENV['PAGE_ID']}['access_token']
+			Rails.cache.write('page_token',page_token)
 
-		privacy = {'value' => 'CUSTOM', 'allow' => '40900695,577932694'}
+			me = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => page_token ).fetch
+		end
 
-		me = FbGraph::User.me( token )
 		album = me.albums.find{|f| f.name == album_title }
-		album = me.album!( :name => album_title, :privacy => privacy, :message => photo_description) if album.nil?
+		album = me.album!( :name => album_title, :message => photo_description, :token => ENV['PAGE_TOKEN'] ) if album.nil?
 
-		# token = ENV['PAGE_TOKEN']
-		# me = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => token ).fetch
-		# album = me.albums.find{|f| f.name == album_title }
-		# album = me.album!( :name => album_title, :message => photo_description ) if album.nil?
-
-		uploaded_photo = album.photo!( :url => photo_path, :message => photo_description, :token => token )
+			uploaded_photo = album.photo!( :url => photo_path, :message => photo_description, :token => ENV['PAGE_TOKEN'] )
 
 		facebook_photo = album.photos.find{ |fb_photo| fb_photo.identifier == uploaded_photo.identifier }
 
@@ -119,6 +119,7 @@ class Signup < ActiveRecord::Base
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
+			(self.friends || '').split(',').each do |friend|
 				WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
 			end
 
