@@ -136,7 +136,7 @@ jQuery(document).ready(function($) {
 		return false
 	})
 	$('.social.tumblr').click( function(){
-		window.open('http://www.tumblr.com/share/link?url=www.theallycoalition.org/soundoff/&name=I+told+my+Congressional+Reps+to+support+safe+schools,+you+should+too','tumbsharer','toolbar=0,status=0,width=300,height=200');
+		window.open('http://www.tumblr.com/share/link?url=www.theallycoalition.org/soundoff/&name=I+told+my+Congressional+Reps+to+support+safe+schools,+you+should+too&tags=mostnightstac,soundoff','tumbsharer','toolbar=0,status=0,width=300,height=200');
 		return false
 	})
 	$('.social.twitter').click( function(){
