@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 
 	var search = document.location.search.toString().replace(/\?/,'').split("&"),
 		config = {},
-		base_url = 'http://localhost:5050'
+		base_url = 'http://snap-tivist.com'
 
 	for (var i = search.length - 1; i >= 0; i--) {
 		var param = search[i].split('=')
@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 
 		$('.new-user-1').hide()
 		if( typeof config.reps != 'undefined' ) setReps();
-		else getReps()
+		else getReps(config.zip)
 	}
 
 
@@ -83,10 +83,34 @@ jQuery(document).ready(function($) {
 		$('.new-user-2').delay(500).fadeIn();
 	});
 	$('.go').click(function(e){
+		var $this = $(this);
+		if( $this.attr('href') == '#step2' ) {
+			var errors = [],
+				params = {}
+			$this.parent().find('input[type=text]').each( function() {
+				var $input = $(this).removeClass('oops')
+				if( $input.attr('name') == 'zip' ) {
+					if ($input.val().length != 5 ) {
+						$input.addClass('oops')
+						errors.push( $input )
+					} else params.zip = $input.val()
+				} else {
+					if( $input.val().length < 1 ) {
+						$input.addClass('oops')
+						errors.push( $input )
+					} else params[ $input.attr('name') ] = $input.val();
+				}
+			})
+			if( errors.length > 1 ) return false
+			else {
+				saveSignup( params )
+				getReps(zip)
+			}
+		}
 		$('#share').delay(0).slideDown('slow');
 		$('#soundoff').delay(100).slideDown('slow');
 		$('#reps').delay(200).slideDown('slow',slideToReps);
-		$(this).fadeOut();
+		$this.fadeOut();
 	});
 	$('.zipcode .edit').click( function(e) {
 		$('input[name=zip]').val('')
@@ -107,11 +131,11 @@ jQuery(document).ready(function($) {
 
 	$(window).scrollTo(150, 'slow');
 
-	function getReps() {
+	function getReps(zip) {
 		$.ajax({
 				url: 'http://congress.api.sunlightfoundation.com/legislators/locate?callback=?',
 				dataType: 'jsonp',
-				data: { apikey: '8fb5671bbea849e0b8f34d622a93b05a', zip: config.zip },
+				data: { apikey: '8fb5671bbea849e0b8f34d622a93b05a', zip: zip },
 				success: function(r) {
 					setReps(r.results);
 				}
@@ -130,6 +154,10 @@ jQuery(document).ready(function($) {
 			};
 			if( reps.length > 3 ) $('.people').css({ left: ( 120 - ( reps.length - 3 ) * 125 ), width: (reps.length * 250) })
 		}
+	}
+	function saveSignup() {
+		params['source'] = 'webform'
+		$.post( '/save', params,function(r) { console.log(r) })
 	}
 
 });
