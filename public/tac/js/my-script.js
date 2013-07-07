@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
 		e.preventDefault();
 	})
 	$('.soundoff').click(function(e) {
-		var config = {campaign: 61}
+		var config = {campaign: 59}
 		config.zip = $('input[name=zip]').val()
 		config.email = $('input[name=email]').val()
 		config.page_url = 'http://theallycoalition.org/soundoff'
