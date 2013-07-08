@@ -40,11 +40,12 @@ class Signup < ActiveRecord::Base
 		unless complete
 			Thread.new do
 				unless uploaded_photo
+					puts 'file uploading to aws'
 					file = File.open( file_name,'r' )
-					store =  AWS::S3::S3Object.store(file, photo, 'tac')
+					store =  AWS::S3::S3Object.store(file_name, file, 'tac')
 					file.close()
-
 			  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
+			  		puts 'file uploading to facebook'
 					send_photo_to_facebook
 				else
 					if does_send_tweets
