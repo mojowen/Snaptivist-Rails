@@ -2,7 +2,7 @@
 	- if item.class == String
 		.col= link_to item, 'mailto:'+item
 	- else
-		.col= link_to item[:email], 'mailto:'+item[:email]
+		.col= link_to item[:email], 'mailto:'+( item[:email] || '')
 		&#09;
 		.col= item[:firstName] if item[:firstName]
 		&#09;
