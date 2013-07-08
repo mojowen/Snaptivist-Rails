@@ -7,19 +7,19 @@ class Signup < ActiveRecord::Base
 
 	validates_presence_of :email, :firstName, :zip
 
-	attr_accessor :photo, :sendTweet, :event
+	attr_accessor :photo, :sendTweet, :event, :uploaded_photo
 
   	has_many :statuses
 
   	before_save :save_photo, :set_source, :handle_webform
   	def save_photo
-  		self.uploaded_photo = false
+		uploaded_photo = false
   		unless complete
 	  		unless photo.nil?
 	  			f = File.open( file_path,'w')
 	  			f.write( photo )
 	  			f.close()
-	  			self.uploaded_photo = true
+	  			uploaded_photo = true
 		  	end
 	  	end
 	end
@@ -39,7 +39,7 @@ class Signup < ActiveRecord::Base
 	def sync
 		unless complete
 			Thread.new do
-				unless self.uploaded_photo
+				unless uploaded_photo
 					file = File.open( file_name,'r' )
 					store =  AWS::S3::S3Object.store(file, photo, 'tac')
 					file.close()
