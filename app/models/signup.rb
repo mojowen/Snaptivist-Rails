@@ -18,7 +18,6 @@ class Signup < ActiveRecord::Base
 	  			f = File.open( file_path,'w')
 	  			f.write( photo )
 	  			f.close()
-	  			photo.close()
 				# store =  AWS::S3::S3Object.store(file_name, photo, 'tac')
 		  		# self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
 		  	end
