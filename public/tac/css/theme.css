@@ -2300,9 +2300,6 @@ header nav ul li.active {
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-#info .welcome .user-name .user-info {
-  height: 52px;
-}
 #info .welcome,
 #info .zipcode {
   text-align: center;
@@ -2362,7 +2359,7 @@ header nav ul li.active {
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-.circle.button {
+.new-user-2 .circle {
   font-family: "Wilma-Base";
   border: none;
   padding: 28px 20px;
@@ -2418,6 +2415,10 @@ header nav ul li.active {
   color: white;
 }
 #reps .people {
+  display: inline;
+  float: left;
+  margin: 0 10px;
+  width: 700px;
   position: relative;
   left: 120px;
   clear: both;
@@ -2435,8 +2436,6 @@ header nav ul li.active {
 #reps .people .card img {
   border: 1px solid #b9b9b9;
   margin-bottom: 16px;
-  width: 202px;
-  height: 252px;
 }
 #reps .people .card h3 {
   color: #808080;
@@ -2563,7 +2562,4 @@ footer p {
   color: white;
   font-family: "Adobe Caslon", Georgia, serif;
   font-size: 16px;
-}
-.oops {
-  border:1px solid red !important;
 }
