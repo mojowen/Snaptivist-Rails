@@ -16,10 +16,12 @@ class Signup < ActiveRecord::Base
 		uploaded_photo = false
   		unless complete
 	  		unless photo.nil?
+	  			puts "writing file"
 	  			f = File.open( file_path,'w')
-	  			f.write( photo )
+	  			puts f.write( photo )
 	  			f.close()
 	  			uploaded_photo = true
+	  			puts "uploaded #{uploaded_photo} "
 		  	end
 	  	end
 	end
