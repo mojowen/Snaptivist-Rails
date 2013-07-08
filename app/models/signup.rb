@@ -35,30 +35,27 @@ class Signup < ActiveRecord::Base
 	end
 
 
-  	after_save :sync
 	def sync
 		unless complete
-			Thread.new do
-				unless uploaded_photo
-					puts 'file uploading to aws'
-					file = File.open( file_name,'r' )
-					store =  AWS::S3::S3Object.store(file_name, file, 'tac')
-					file.close()
-			  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
-			  		puts 'file uploading to facebook'
-					send_photo_to_facebook
+			unless uploaded_photo
+				puts 'file uploading to aws'
+				file = File.open( file_name,'r' )
+				store =  AWS::S3::S3Object.store(file_name, file, 'tac')
+				file.close()
+		  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
+		  		puts 'file uploading to facebook'
+				send_photo_to_facebook
+			else
+				if does_send_tweets
+					send_tweets
 				else
-					if does_send_tweets
-						send_tweets
-					else
-						send_emails
-					end
+					send_emails
 				end
-				save_to_fanbridge
-				self.complete = true
-				self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
-				self.save
 			end
+			save_to_fanbridge
+			self.complete = true
+			self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
+			self.save
 		end
 	end
 
