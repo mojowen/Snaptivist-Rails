@@ -4,7 +4,7 @@
 		%img.small_photo{ :src => item.photo_path }
 	%p From #{ item.source } on #{ item.photo_date }
 	%p
-		Email: #{ link_to item.email, 'mailto:'+item.email } Zip: #{ item.zip }
+		Email: #{ link_to item.email, 'mailto:'+(item.email || '' ) } Zip: #{ item.zip }
 		- unless  item.twitter.nil? || item.twitter.empty?
 			Twitter:
 			= link_to '@'+item.twitter, 'http://twitter.com/'+item.twitter
