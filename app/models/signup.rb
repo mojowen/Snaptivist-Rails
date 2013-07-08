@@ -5,6 +5,8 @@ class Signup < ActiveRecord::Base
   		:photo_path, :facebook_photo, :source,
   		:sendTweet, :event, :photo
 
+	validates_presence_of :email, :firstName, :zip
+
 	attr_accessor :photo, :sendTweet, :event
 
   	has_many :statuses
@@ -13,11 +15,11 @@ class Signup < ActiveRecord::Base
   	def save_photo
   		unless complete
 	  		unless photo.nil?
-	  			puts "Uploading photo to S3 at #{DateTime.now}"
-				store =  AWS::S3::S3Object.store(file_name, photo, 'tac')
-		  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
-		  		self.photo = nil
-		  		puts "Completed uploading photo to S3 at #{DateTime.now}"
+	  			f = File.open( file_path,'w')
+	  			f.write( photo.read )
+	  			f.close()
+				# store =  AWS::S3::S3Object.store(file_name, photo, 'tac')
+		  		# self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
 		  	end
 	  	end
 	end
@@ -37,19 +39,19 @@ class Signup < ActiveRecord::Base
 	def sync
 		unless complete
 			Thread.new do
-				unless self.photo_path.nil?
-					send_photo_to_facebook
-				else
-					if does_send_tweets
-						send_tweets
-					else
-						send_emails
-					end
-				end
-				save_to_fanbridge
-				self.complete = true
-				self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
-				self.save
+				# unless self.photo_path.nil?
+				# 	send_photo_to_facebook
+				# else
+				# 	if does_send_tweets
+				# 		send_tweets
+				# 	else
+				# 		send_emails
+				# 	end
+				# end
+				# save_to_fanbridge
+				# self.complete = true
+				# self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
+				# self.save
 			end
 		end
 	end
@@ -169,6 +171,9 @@ class Signup < ActiveRecord::Base
 	end
   	def file_name
 		[firstName,lastName,photo_date].join('_')+'.png'
+  	end
+  	def file_path
+  		'cache/'+file_name
   	end
   	def friend_count
   		return (friends || '').split(',').count
