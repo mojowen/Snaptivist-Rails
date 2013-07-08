@@ -3,7 +3,7 @@ class Signup < ActiveRecord::Base
   	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :photo_date, :complete,
   		:friends, :reps,
   		:photo_path, :facebook_photo, :source,
-  		:sendTweet, :event, :photo
+  		:sendTweet, :event, :photo, :uploaded_photo
 
 	validates_presence_of :email, :firstName, :zip
 
@@ -13,13 +13,13 @@ class Signup < ActiveRecord::Base
 
   	before_save :save_photo, :set_source, :handle_webform
   	def save_photo
+  		self.uploaded_photo = false
   		unless complete
 	  		unless photo.nil?
 	  			f = File.open( file_path,'w')
 	  			f.write( photo )
 	  			f.close()
-				# store =  AWS::S3::S3Object.store(file_name, photo, 'tac')
-		  		# self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
+	  			self.uploaded_photo = true
 		  	end
 	  	end
 	end
@@ -39,19 +39,24 @@ class Signup < ActiveRecord::Base
 	def sync
 		unless complete
 			Thread.new do
-				# unless self.photo_path.nil?
-				# 	send_photo_to_facebook
-				# else
-				# 	if does_send_tweets
-				# 		send_tweets
-				# 	else
-				# 		send_emails
-				# 	end
-				# end
-				# save_to_fanbridge
-				# self.complete = true
-				# self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
-				# self.save
+				unless self.uploaded_photo
+					file = File.open( file_name,'r' )
+					store =  AWS::S3::S3Object.store(file, photo, 'tac')
+					file.close()
+
+			  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
+					send_photo_to_facebook
+				else
+					if does_send_tweets
+						send_tweets
+					else
+						send_emails
+					end
+				end
+				save_to_fanbridge
+				self.complete = true
+				self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
+				self.save
 			end
 		end
 	end
