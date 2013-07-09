@@ -101,10 +101,15 @@ jQuery(document).ready(function($) {
 					} else params[ $input.attr('name') ] = $input.val();
 				}
 			})
-			if( errors.length > 1 ) return false
+			if( errors.length > 1 ) {
+				$('#info .wrapper').append('<span class="oops-msg"><i class="icon-warning-sign"></i>  Oops! Looks like you missed something.</span>');
+				return false;
+				
+			}
 			else {
-				saveSignup( params )
-				getReps( params.zip)
+				saveSignup( params );
+				getReps( params.zip);
+				$('.oops-msg').fadeOut();
 			}
 		} else {
 			saveSignup( config )

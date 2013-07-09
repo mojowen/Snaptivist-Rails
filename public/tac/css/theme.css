@@ -2018,13 +2018,13 @@ body {
 h1,
 h2,
 h3 {
-  font-family: "Wilma-Base", Helvetica, Arial, serif;
+  font-family: "Wilma-Base", Helvetica, Arial, sans-serif;
   font-weight: 400;
 }
 h1 a,
 h2 a,
 h3 a {
-  font-family: "Wilma-Base", Helvetica, Arial, serif;
+  font-family: "Wilma-Base", Helvetica, Arial, sans-serif;
 }
 h1 {
   line-height: 48px;
@@ -2045,7 +2045,7 @@ h2 {
 div,
 p,
 a {
-  font-family: "Wilma-Base", Helvetica, Arial, serif;
+  font-family: "Wilma-Base", Helvetica, Arial, sans-serif;
 }
 p,
 ul {
@@ -2124,6 +2124,7 @@ html[xmlns] .clearfix {
   padding: 20px;
   font-size: 36px;
   border-bottom: 3px solid transparent;
+  cursor: pointer;
 }
 .button:hover {
   border-bottom: 3px solid #7e2020;
@@ -2144,7 +2145,43 @@ html[xmlns] .clearfix {
   top: -108px;
 }
 .oops {
-  border: 1px solid red;
+  border: 2px solid #cd3737 !important;
+}
+.oops-msg {
+  font-family: 'MuseoSlab700Regular', Georgia, serif;
+  background-color: black;
+  padding: 12px;
+  display: inline-block;
+  margin: 32;
+  color: white;
+  top: -40px;
+  position: relative;
+  font-size: 16px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 2px solid #cd3737;
+  -moz-opacity: 0.7;
+  -khtml-opacity: 0.7;
+  -webkit-opacity: 0.7;
+  opacity: 0.7;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+  filter: alpha(opacity=70);
 }
 /****** Header *******/
 header {
@@ -2165,6 +2202,7 @@ header hgroup {
 header nav {
   font-size: 16px;
   text-align: left;
+  font-family: 'MuseoSlab700Regular', Georgia, serif;
 }
 header nav ul {
   padding: 30px 0;
@@ -2338,11 +2376,11 @@ header nav ul li.active {
   margin: 20px auto;
   height: 50px;
   background-color: #eaeaee;
-  font-family: "Wilma-Base";
+  font-family: 'MuseoSlab300Regular', Georgia, serif;
   padding: 12px;
   border: 1px solid #a8abba;
   width: 300px;
-  color: #cd3737;
+  color: #22234b;
   -webkit-border-top-right-radius: 3px;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 0;
@@ -2388,6 +2426,12 @@ header nav ul li.active {
   -moz-border-radius: 80px;
   border-radius: 80px;
 }
+.new-user-2 .circle:hover {
+  box-shadow: 0px 4px 0px #7e2020;
+  -webkit-box-shadow: 0px 4px 0px #7e2020;
+  -moz-box-shadow: 0px 4px 0px #7e2020;
+  -o-box-shadow: 0px 4px 0px #7e2020;
+}
 #reps,
 #share,
 #soundoff {
@@ -2418,10 +2462,7 @@ header nav ul li.active {
   color: white;
 }
 #reps .people {
-  display: inline;
-  float: left;
-  margin: 0 10px;
-  width: 700px;
+  width: 90%;
   position: relative;
   left: 120px;
   clear: both;
@@ -2446,6 +2487,10 @@ header nav ul li.active {
   text-align: left;
   margin: 0;
   padding: 0 2px;
+  font-family: 'MuseoSlab700Regular', Georgia, serif;
+}
+#reps .people .card h3:nth-child(3) {
+  font-size: 14px;
 }
 #reps .bill {
   position: relative;
@@ -2478,7 +2523,8 @@ header nav ul li.active {
 }
 #reps .bill p {
   color: white;
-  text-align: left;
+  font-family: 'MuseoSlab300Regular', Georgia, serif;
+  line-height: 1.5em;
 }
 /***** Soundoff Section *****/
 #soundoff {
@@ -2534,14 +2580,14 @@ header nav ul li.active {
   background-size: 280px;
 }
 #share .social:hover {
-  -webkit-box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
 }
 #share .social:active {
-  -webkit-box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0px 2px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0px 4px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0px 4px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0px 4px 0px rgba(0, 0, 0, 0.3);
 }
 #share .facebook {
   background-color: #3c5d96;
@@ -2563,6 +2609,6 @@ footer {
 }
 footer p {
   color: white;
-  font-family: "Adobe Caslon", Georgia, serif;
+  font-family: 'MuseoSlab300Regular', Georgia, serif;
   font-size: 16px;
 }
