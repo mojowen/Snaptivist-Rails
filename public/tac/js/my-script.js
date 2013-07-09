@@ -23,6 +23,7 @@ jQuery(document).ready(function($) {
 	// Sticky header
 	$(document).scroll(function(){
 		var scrollpos = $(window).scrollTop();
+		console.log(scrollpos);
 		if (scrollpos >= 150) {
 			$('header').addClass('fixed-header');
 			$('#page').css('margin-top',256);
@@ -78,6 +79,9 @@ jQuery(document).ready(function($) {
 		$(window).scrollTo(700,'slow');
 	}
 	$('#start').click(function(){
+		$(window).scrollTo(150, 'slow', {
+			axis: 'y',
+		});
 		$('.new-user-1').fadeOut();
 		$('#info').css('height',600);
 		$('.new-user-2').delay(500).fadeIn();
@@ -101,10 +105,15 @@ jQuery(document).ready(function($) {
 					} else params[ $input.attr('name') ] = $input.val();
 				}
 			})
-			if( errors.length > 1 ) return false
+			if( errors.length > 1 ) {
+				$('#info .wrapper').append('<span class="oops-msg"><i class="icon-warning-sign"></i>  Oops! Looks like you missed something.</span>');
+				return false;
+				
+			}
 			else {
-				saveSignup( params )
-				getReps( params.zip)
+				saveSignup( params );
+				getReps( params.zip);
+				$('.oops-msg').fadeOut();
 			}
 		} else {
 			saveSignup( config )
@@ -143,8 +152,6 @@ jQuery(document).ready(function($) {
 		window.open("https://twitter.com/intent/tweet?&text=I+told+my+Congressional+Reps+to+support+safe+schools,+you+should+too:&url=http://theallycoalition.org/soundoff&related=allycoalition&via=allycoalition&hashtags=soundoff,mostnights",'twittershare','toolbar=0,status=0,width=300,height=200');
 		return false
 	})
-
-	$(window).scrollTo(150, 'slow');
 
 	function getReps(zip) {
 		$.ajax({
