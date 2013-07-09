@@ -11,20 +11,7 @@ class Signup < ActiveRecord::Base
 
   	has_many :statuses
 
-  	before_save :save_photo, :set_source, :handle_webform
-  	def save_photo
-		uploaded_photo = false
-  		unless complete
-	  		unless photo.nil?
-	  			puts "writing file"
-	  			f = File.open( file_path,'w')
-	  			puts f.write( photo )
-	  			f.close()
-	  			uploaded_photo = true
-	  			puts "uploaded #{uploaded_photo} "
-		  	end
-	  	end
-	end
+  	before_save :set_source, :handle_webform
 	def set_source
 		self.source = event.gsub("\t"," ") if event && ! complete
 	end
@@ -36,16 +23,9 @@ class Signup < ActiveRecord::Base
 		end
 	end
 
-
 	def sync
 		unless complete
-			unless uploaded_photo
-				puts 'file uploading to aws'
-				file = File.open( file_name,'r' )
-				store =  AWS::S3::S3Object.store(file_name, file, 'tac')
-				file.close()
-		  		self.photo_path = AWS::S3::S3Object.url_for(file_name,'tac',:expires_in => 60 * 60 * 48 )
-		  		puts 'file uploading to facebook'
+			unless photo_date
 				send_photo_to_facebook
 			else
 				if does_send_tweets
