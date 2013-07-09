@@ -7,7 +7,11 @@ class HomeController < ApplicationController
 	end
 	def save
 		signup = Signup.new( params[:signup] )
-		render :json => {:success =>  signup.save, :signup => params[:signup] }, :template => false
+		if  signup.save
+			render :json => {:success => true, :signup => params[:signup] }, :template => false
+		else
+			render :json => {:success => true, :signup => params[:signup] }, :template => false, :status => 500
+		end
 	end
 
 
