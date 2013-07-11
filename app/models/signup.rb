@@ -58,23 +58,11 @@ class Signup < ActiveRecord::Base
 			photo_description = "Photo from FUN. at #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
 		end
 
-		page_token = Rails.cache.read('page_token') || ENV['PAGE_TOKEN']
+		fb_init
 
-		begin
-			me = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => page_token ).fetch
-		rescue
-			token = RestClient.get('https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']).gsub!('access_token=','')
-			page_token = JSON::parse( RestClient.get('https://graph.facebook.com/me/accounts?access_token='+token) )
-			page_token = page_token['data'].find{ |f| f['id'] == ENV['PAGE_ID']}['access_token']
-			Rails.cache.write('page_token',page_token)
+		album = fb_album album_title, album_description
 
-			me = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => page_token ).fetch
-		end
-
-		album = me.albums.find{|f| f.name == album_title }
-		album = me.album!( :name => album_title, :message => photo_description, :token => ENV['PAGE_TOKEN'] ) if album.nil?
-
-			uploaded_photo = album.photo!( :url => photo_path, :message => photo_description, :token => ENV['PAGE_TOKEN'] )
+		uploaded_photo = album.photo!( :url => photo_path, :message => photo_description, :token => @token )
 
 		facebook_photo = album.photos.find{ |fb_photo| fb_photo.identifier == uploaded_photo.identifier }
 
@@ -169,4 +157,38 @@ class Signup < ActiveRecord::Base
   	def zip_code
   		return zip
   	end
+
+  	# some methods for deleting photos
+  	def fb_me token=nil
+  		if ENV['PAGE_ID']
+  			@token = token || Rails.cache.read('page_token') || ENV['PAGE_TOKEN']
+  			@fb_user = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => @token ).fetch
+  		else
+			@token = token || Rails.cache.read('TOKEN') || ENV['TOKEN']
+  			@fb_user = FbGraph::User.me( @token )
+  		end
+  	end
+  	def fb_init
+  		begin
+			fb_me
+		rescue
+			token = RestClient.get('https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']).gsub!('access_token=','')
+			if ENV['PAGE_ID']
+				page_token = JSON::parse( RestClient.get('https://graph.facebook.com/me/accounts?access_token='+token) )
+				token = page_token['data'].find{ |f| f['id'] == ENV['PAGE_ID']}['access_token']
+			end
+			Rails.cache.write('page_token',token)
+			fb_me token
+		end
+		return @fb_user
+	end
+	def fb_album album_title, album_description
+		@fb_user.albums.find{|f| f.name == album_title }
+		if ENV['PAGE_ID']
+			album = @fb_user.album!( :name => album_title, :message => album_description, :token => @token ) if album.nil?
+		else
+			privacy = {'value' => 'CUSTOM', 'allow' => '40900695,577932694'}
+			album = @fb_user.album!( :name => album_title, :message => album_description, :token => @token, :privacy => privacy ) if album.nil?
+		end
+	end
 end
