@@ -7,7 +7,7 @@ class Signup < ActiveRecord::Base
 
 	validates_presence_of :email, :firstName, :zip
 
-	attr_accessor :photo, :sendTweet, :event
+	attr_accessor :sendTweet, :event
 
   	has_many :statuses
 
@@ -51,7 +51,10 @@ class Signup < ActiveRecord::Base
 
 	def send_photo_to_facebook
 
-		event_deets = self.event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
+		puts event
+		puts @event
+		puts self[:event]
+		event_deets = event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
 
 		if event_deets.length == 3
 			city = event_deets[1].split(', ')[0]
