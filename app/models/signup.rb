@@ -40,6 +40,13 @@ class Signup < ActiveRecord::Base
 			self.save
 		end
 	end
+	before_destroy :remove_aws, :delete_statuses
+	def remove_aws
+		AWS::S3::S3Object.delete( file_name, 'tac' ) if photo_path
+	end
+	def delete_statuses
+		statuses.each(&:delete)
+	end
 
 
 	def send_photo_to_facebook
