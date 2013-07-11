@@ -9,7 +9,7 @@ class Status < ActiveRecord::Base
 
 		# begin
 		  	if photo_path.nil? && ! signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
-
+				require 'RMagick'
 		  		photo = open( signup.photo_path) # If not - download it from facebook
 				image = Magick::ImageList.new
 				image.from_blob(photo.read)
