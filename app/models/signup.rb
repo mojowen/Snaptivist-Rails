@@ -26,7 +26,12 @@ class Signup < ActiveRecord::Base
 	def send_sync
 		Thread.new{ sync } unless complete
 	end
-	def sync
+	def sync add_event=nil
+		unless add_event.nil?
+			self.event = add_event
+			source = event.gsub("\t",' ')
+		end
+
 		if photo_path
 			send_photo_to_facebook
 		else
@@ -95,7 +100,7 @@ class Signup < ActiveRecord::Base
 	end
 
 	def send_emails
-		event_deets = self.event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
+		event_deets = event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
 		event_name = event_deets[1].split(', ').first
 
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
