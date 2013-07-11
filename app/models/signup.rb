@@ -102,10 +102,11 @@ class Signup < ActiveRecord::Base
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
-			(friends || '').split(',').each do |friend|
-				WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
+			unless friends.nil?
+				(friends || '').split(',').each do |friend|
+					WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
+				end
 			end
-
 		else
 			if self.zip.length == 5 && self.sendTweet && self.reps.class == Array
 				WelcomeMailer.us_tweet( self, event_name, self.facebook_photo ).deliver
