@@ -90,13 +90,13 @@ class Signup < ActiveRecord::Base
 		return ! self.reps.nil? && ! self.reps.empty? && ( self.sendTweet.to_i != 0 rescue false)
 	end
 
-	def send_tweets
+	def send_tweets skip_emails=false
 		#  Use SoundOff's find reps method to find reps with the bioguides
 		if self.reps.class == String
 			self.reps = JSON::parse( RestClient.get('http://www.soundoffatcongress.org/find_reps?bio='+self.reps ) )
 		end
 		reps.each{ |rep| enqueue_tweet( rep ) }
-		send_emails
+		send_emails unless skip_emails
 	end
 
 	def send_emails
