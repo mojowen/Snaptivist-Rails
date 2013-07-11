@@ -1,7 +1,7 @@
 %h1 All #{@type.pluralize}
 .help= @disclaimer
 
-%a{ :href => '#', :onclick => 'document.location = document.location.search == "" ?  document.location + \'?export\' : \'&export\'; return false', :style => 'text-align:right' }
+%a{ :href => '#', :onclick => 'document.location = document.location.search == "" ?  document.location + \'?export=true\' : \'&export=true\'; return false', :style => 'text-align:right' }
 	%h3 Export
 
 .items
