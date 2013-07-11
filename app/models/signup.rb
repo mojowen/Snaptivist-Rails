@@ -22,7 +22,10 @@ class Signup < ActiveRecord::Base
 			self.photo_date = DateTime.now
 		end
 	end
-
+	after_save :send_sync
+	def send_sync
+		Thread.new{ sync }
+	end
 	def sync
 		unless complete
 			if photo_path
@@ -203,12 +206,13 @@ class Signup < ActiveRecord::Base
 		return @fb_user
 	end
 	def fb_album album_title, album_description
-		@fb_user.albums.find{|f| f.name == album_title }
+		album = @fb_user.albums.find{|f| f.name == album_title }
 		if ENV['PAGE_ID']
 			album = @fb_user.album!( :name => album_title, :message => album_description, :token => @token ) if album.nil?
 		else
 			privacy = {'value' => 'CUSTOM', 'allow' => '40900695,577932694'}
 			album = @fb_user.album!( :name => album_title, :message => album_description, :token => @token, :privacy => privacy ) if album.nil?
 		end
+		return album
 	end
 end
