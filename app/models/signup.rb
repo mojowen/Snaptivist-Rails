@@ -74,9 +74,7 @@ class Signup < ActiveRecord::Base
 
 		uploaded_photo = album.photo!( :url => photo_path, :message => photo_description, :token => @token )
 
-		facebook_photo = "https://www.facebook.com/photo.php?fbid=#{uploaded_photo.identifier}"
-
-		self.facebook_photo = facebook_photo.link
+		self.facebook_photo = "https://www.facebook.com/photo.php?fbid=#{uploaded_photo.identifier}"
 
 		if does_send_tweets
 			send_tweets
