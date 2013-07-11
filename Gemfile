@@ -27,7 +27,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
 gem 'rest-client'
 gem 'nokogiri'
 gem 'tweetstream'

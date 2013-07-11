@@ -3,11 +3,11 @@ class Signup < ActiveRecord::Base
   	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :photo_date, :complete,
   		:friends, :reps,
   		:photo_path, :facebook_photo, :source,
-  		:sendTweet, :event, :photo, :uploaded_photo
+		:sendTweet, :event
 
 	validates_presence_of :email, :firstName, :zip
 
-	attr_accessor :photo, :sendTweet, :event, :uploaded_photo
+	attr_accessor :photo, :sendTweet, :event
 
   	has_many :statuses
 
@@ -25,7 +25,7 @@ class Signup < ActiveRecord::Base
 
 	def sync
 		unless complete
-			unless photo_date
+			unless photo_path
 				send_photo_to_facebook
 			else
 				if does_send_tweets
