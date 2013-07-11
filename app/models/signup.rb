@@ -102,10 +102,11 @@ class Signup < ActiveRecord::Base
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
-			(friends || '').split(',').each do |friend|
-				WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
+			unless friends.nil?
+				(friends || '').split(',').each do |friend|
+					WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
+				end
 			end
-
 		else
 			if self.zip.length == 5 && self.sendTweet && self.reps.class == Array
 				WelcomeMailer.us_tweet( self, event_name, self.facebook_photo ).deliver
@@ -113,22 +114,31 @@ class Signup < ActiveRecord::Base
 				WelcomeMailer.us_no_tweet( self, event_name, self.facebook_photo ).deliver
 			end
 
-			(self.friends || '').split(',').each do |friend|
-				WelcomeMailer.us_no_tweet( friend, event_name, self.facebook_photo ).deliver
+			unless friends.nil?
+				( friends || '').split(',').each do |friend|
+					WelcomeMailer.us_no_tweet( friend, event_name, self.facebook_photo ).deliver
+				end
 			end
 		end
 
 	end
 	def save_to_fanbridge
-		return false
-		params = {}
-		params['firstName'] = firstName
-		params['lastname'] = lastName
-		params['email'] = email
-		params['zip'] = zip
-		params['twitter_url'] = twitter
-		fanbridge_send params
-		friends.split(",").each{ |e| fanbridge_send( {'email' => e } ) } unless self.friends.nil?
+		# params = { :subscribers => [], :welcome_email => 0, :token => ENV['FANBRIDGE_TOKEN'] }
+
+		# signup = {}
+		# signup['firstname'] = firstName
+		# signup['email'] = email
+		# signup['lastname'] = lastName
+		# signup['twitter_url'] = 'http://twitter.com/'+twitter unless twitter.nil?
+		# signup['zip'] = zip
+
+		# params[:subscribers].push( signup )
+
+		# (friends || '').split(",").each do |e|
+		# 	params[:subscribers].push( {'email' => e } )
+		# end
+
+		# return fanbridge_send params
 	end
 
 
@@ -144,10 +154,13 @@ class Signup < ActiveRecord::Base
 
 		self.statuses.new({ :message => message, :target => rep['twitter_screen_name'] }).save
 	end
-	def fanbridge_send params={}
-		form = 'http://www.fanbridge.com/signup/fansignup_form.php?userid=177433'
-
-		RestClient.post( form, params ){|response, request, result|  response }
+	def fanbridge_send params
+		# request = URI.encode_www_form(params.sort)
+		# signature = Digest::MD5.hexdigest( request + ENV['FANBRIDGE_SECRET'] )
+		# url = "https://api.fanbridge.com/v3/subscriber/import.json?token=#{ENV['FANBRIDGE_TOKEN']}&signature=#{signature}"
+		# puts url
+		# puts request
+		# return RestClient.post url, request
 	end
   	def file_name
 		[firstName,lastName,photo_date].join('_')+'.png'
