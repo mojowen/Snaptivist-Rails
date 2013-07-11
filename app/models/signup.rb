@@ -102,7 +102,7 @@ class Signup < ActiveRecord::Base
 		if (self.zip.length != 5 rescue true ) && !self.facebook_photo.nil?
 			WelcomeMailer.canadian( self.email, event_name, self.facebook_photo).deliver
 
-			(self.friends || '').split(',').each do |friend|
+			(friends || '').split(',').each do |friend|
 				WelcomeMailer.canadian( friend, event_name, self.facebook_photo).deliver
 			end
 
