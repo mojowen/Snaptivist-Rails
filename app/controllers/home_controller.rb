@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 	def analytics
 		@title = 'ANALYTICS'
 		@signups = Signup.all
-		@by_show = Signup.all.group_by(&:source)
+		@by_show = Signup.all.sort_by(&:photo_date).group_by( &:source)
 	end
 	def list
 
