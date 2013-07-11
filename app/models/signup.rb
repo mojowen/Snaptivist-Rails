@@ -51,9 +51,6 @@ class Signup < ActiveRecord::Base
 
 	def send_photo_to_facebook
 
-		puts event
-		puts @event
-		puts self[:event]
 		event_deets = event.split("\t").map{|s| s.strip }.reject{ |s| s.nil? || s.empty? }
 
 		if event_deets.length == 3
