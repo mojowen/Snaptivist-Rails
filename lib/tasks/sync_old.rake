@@ -14,8 +14,8 @@ task :sync_old => [:environment ] do
 				s.source = s.event.gsub("\t"," ")
 				s.sync
 				puts "#{s.firstName} #{s.id} success"
-			rescue
-				puts "#{s.firstName} #{s.id} fail"
+			rescue => e
+				puts "#{s.firstName} #{s.id} fail #{e}"
 			end
 		end
 	end
