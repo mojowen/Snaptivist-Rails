@@ -24,24 +24,22 @@ class Signup < ActiveRecord::Base
 	end
 	after_save :send_sync
 	def send_sync
-		Thread.new{ sync }
+		Thread.new{ sync } unless complete
 	end
 	def sync
-		unless complete
-			if photo_path
-				send_photo_to_facebook
+		if photo_path
+			send_photo_to_facebook
+		else
+			if does_send_tweets
+				send_tweets
 			else
-				if does_send_tweets
-					send_tweets
-				else
-					send_emails
-				end
+				send_emails
 			end
-			save_to_fanbridge
-			self.complete = true
-			self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
-			self.save
 		end
+		save_to_fanbridge
+		self.complete = true
+		self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
+		self.save
 	end
 	before_destroy :remove_aws, :delete_statuses
 	def remove_aws
