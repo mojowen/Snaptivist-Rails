@@ -7,7 +7,7 @@ class Status < ActiveRecord::Base
 
 	def send_tweet
 
-		begins
+		begin
 			if photo_path.nil? && ! signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
 				require 'RMagick'
 				image = Magick::ImageList.new
