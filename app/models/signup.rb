@@ -25,7 +25,7 @@ class Signup < ActiveRecord::Base
 
 	def sync
 		unless complete
-			unless photo_path
+			if photo_path
 				send_photo_to_facebook
 			else
 				if does_send_tweets
