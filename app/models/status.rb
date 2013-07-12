@@ -29,7 +29,9 @@ class Status < ActiveRecord::Base
 
 			self.sent = true
 			self.save
+			return 'Tweet Success'
 		rescue
+			return 'Tweet Fail'
 		end
 
 	end
