@@ -1,10 +1,20 @@
-%h1 All #{@type.pluralize}
-.help= @disclaimer
+- unless params[:partial]
+	%h1 All #{@type.pluralize}
+	.help= @disclaimer
 
-%a{ :href => '#', :onclick => 'document.location = document.location.search == "" ?  document.location + \'?export=true\' : \'&export=true\'; return false', :style => 'text-align:right' }
-	%h3 Export
+	%a{ :href => '#', :onclick => 'document.location = document.location.search == "" ?  document.location + \'?export=true\' : \'&export=true\'; return false', :style => 'text-align:right' }
+		%h3 Export
 
 .items
 	- @items.each do |item|
 		= render @type, :item => item
 
+- if @items.length == 30
+	%a{ :href => '#', :onclick => 'loadMore(this)' } Load More
+
+:javascript
+	function loadMore(el) {
+		$(el).remove()
+		$.get(document.location.toString(),{ partial: true, offset: $('.item').length }, function(r) { $('.items:last').after(r); } )
+		return false;
+	}
