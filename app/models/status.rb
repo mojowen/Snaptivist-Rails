@@ -30,8 +30,8 @@ class Status < ActiveRecord::Base
 			self.sent = true
 			self.save
 			return 'Tweet Success'
-		rescue
-			return 'Tweet Fail'
+		rescue => e
+			return 'Tweet Fail #{e}'
 		end
 
 	end
