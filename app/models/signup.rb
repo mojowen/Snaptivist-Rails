@@ -68,7 +68,7 @@ class Signup < ActiveRecord::Base
 			city = event_deets[1].split(', ')[0]
 			album_title = "#{event_deets[0]} in #{city}"
 			album_description = "FUN. was in #{city}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
-			photo_description = "Photo from FUN. at #{event_deets[2]}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
+			photo_description = "Photo from FUN. in #{city}. Meet some of the allies that stopped by The Ally Coalition Equality Village! Please tag yourself and your friends"
 		end
 
 		fb_init
