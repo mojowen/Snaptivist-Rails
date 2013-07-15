@@ -53,7 +53,7 @@ class HomeController < ApplicationController
 
 			else
 				@type = 'signup'
-				@items = Signup.all(limit).reverse
+				@items = Signup.all(limit)
 
 				@mapping = ['firstName','lastName','email','source','photo_date','facebook_photo','photo_path','twitter','zip','tweet_count','friend_count']
 				@title_row = ['first name','last name','email','source','date taken','facebook photo link','raw photo link','twitter name','zip','number of tweets','number of friends']
