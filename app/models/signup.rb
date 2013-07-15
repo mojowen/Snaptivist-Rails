@@ -13,7 +13,7 @@ class Signup < ActiveRecord::Base
 
   	before_save :set_source, :handle_webform
 	def set_source
-		self.source = event.gsub("\t"," ") if event && ! complete
+		self.source = event.gsub("\t"," ").strip if event && ! complete
 	end
 	def handle_webform
 		if (self.source || '' ).downcase == 'webform'
