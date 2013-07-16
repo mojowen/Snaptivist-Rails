@@ -31,7 +31,10 @@ class Status < ActiveRecord::Base
 			self.save
 			return 'Tweet Success'
 		rescue => e
-			return "Tweet Fail #{e}"
+			return "Tweet Fail\nError: #{e}\nData:#{self.message} #{self.signup.photo_path}"
+			self.sent = true
+			self.data = { :error => e }
+			self.save
 		end
 
 	end
