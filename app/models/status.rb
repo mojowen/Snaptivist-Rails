@@ -11,8 +11,8 @@ class Status < ActiveRecord::Base
 			if photo_path.nil? && ! signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
 				require 'RMagick'
 				image = Magick::ImageList.new
-				image.from_blob( open( signup.photo_path).read )
-				image.resize(600,450)
+				image.from_blob( open( signup.photo_path.slice('?')[0] ).read )
+				image = image.resize(600,450)
 				# begin
 					self.data = Twitter.update_with_media( self.message, image.to_blob )
 					signup.statuses.reject{ |s| s == self }.each{ |s| s.update_attributes( :photo_path => self.data['entities']['media'].first['url'] ) } # Attach the photo URL - already uplaoded to twitter
