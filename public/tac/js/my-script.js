@@ -17,6 +17,7 @@ jQuery(document).ready(function($) {
 		$('.new-user-1').hide()
 		if( typeof config.reps != 'undefined' ) setReps();
 		else getReps(config.zip)
+		openSoundOff({message: 'please cosponsor Safe Schools: HR1625/HR1199 & S403/S1088', zip: config.zip, email: config.email, campaign: 59 })
 	}
 
 
@@ -31,7 +32,6 @@ jQuery(document).ready(function($) {
 			$('header').removeClass('fixed-header');
 			$('#page').css('margin-top',0);
 		};
-
 	});
 
 
@@ -108,7 +108,6 @@ jQuery(document).ready(function($) {
 			if( errors.length > 1 ) {
 				$('#info .wrapper').append('<span class="oops-msg"><i class="icon-warning-sign"></i>  Oops! Looks like you missed something.</span>');
 				return false;
-				
 			}
 			else {
 				saveSignup( params );
