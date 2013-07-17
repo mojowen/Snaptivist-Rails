@@ -15,6 +15,13 @@
 :javascript
 	function loadMore(el) {
 		$(el).remove()
-		$.get(document.location.toString(),{ partial: true, offset: $('.item').length }, function(r) { $('.items:last').after(r); } )
+		$.get(
+			document.location.toString(),
+			{ partial: true, offset: $('.item').length },
+			function(r) {
+				$('.items:last').after(r);
+				if( #{ (@type == 'tweets').to_json } ) twttr.widgets.load();
+			}
+	);
 		return false;
 	}
