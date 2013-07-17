@@ -2483,6 +2483,7 @@ header nav ul li.active {
 #reps .people .card img {
   border: 1px solid #b9b9b9;
   margin-bottom: 16px;
+  width: 200px;
 }
 #reps .people .card h3 {
   color: #808080;

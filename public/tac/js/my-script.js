@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 	// Sticky header
 	$(document).scroll(function(){
 		var scrollpos = $(window).scrollTop();
-		console.log(scrollpos);
+
 		if (scrollpos >= 150) {
 			$('header').addClass('fixed-header');
 			$('#page').css('margin-top',256);
