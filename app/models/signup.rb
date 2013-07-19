@@ -137,22 +137,22 @@ class Signup < ActiveRecord::Base
 
 	end
 	def save_to_fanbridge
-		# params = { :subscribers => [], :welcome_email => 0, :token => ENV['FANBRIDGE_TOKEN'] }
 
-		# signup = {}
-		# signup['firstname'] = firstName
-		# signup['email'] = email
-		# signup['lastname'] = lastName
-		# signup['twitter_url'] = 'http://twitter.com/'+twitter unless twitter.nil?
-		# signup['zip'] = zip
 
-		# params[:subscribers].push( signup )
+		signup = {}
+		signup['firstname'] = firstName
+		signup['email'] = email
+		signup['lastname'] = lastName
+		signup['twitter_url'] = 'http://twitter.com/'+twitter unless twitter.nil?
+		signup['zip'] = zip
 
-		# (friends || '').split(",").each do |e|
-		# 	params[:subscribers].push( {'email' => e } )
-		# end
+		fanbridge_send signup
 
-		# return fanbridge_send params
+		(friends || '').split(",").each do |e|
+			signup = {}
+			signup['email'] = email
+			fanbridge_send signup
+		end
 	end
 
 
@@ -168,13 +168,15 @@ class Signup < ActiveRecord::Base
 
 		self.statuses.new({ :message => message, :target => rep['twitter_screen_name'] }).save
 	end
-	def fanbridge_send params
-		# request = URI.encode_www_form(params.sort)
-		# signature = Digest::MD5.hexdigest( request + ENV['FANBRIDGE_SECRET'] )
-		# url = "https://api.fanbridge.com/v3/subscriber/import.json?token=#{ENV['FANBRIDGE_TOKEN']}&signature=#{signature}"
-		# puts url
-		# puts request
-		# return RestClient.post url, request
+	def fanbridge_send request
+
+		request['token'] = ENV['FANBRIDGE_TOKEN']
+
+		request['signature'] = Digest::MD5.hexdigest( request.sort_by{|k| k}.map{ |k,v| "#{k}=#{v}"}.join('') + ENV['FANBRIDGE_SECRET'] )
+
+		url = "https://api.fanbridge.com/v3/subscriber/add.json"
+
+		return RestClient.post url, request
 	end
   	def file_name
 		[firstName,lastName,photo_date].join('_')+'.png'
