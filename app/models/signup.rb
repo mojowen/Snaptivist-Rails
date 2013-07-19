@@ -142,7 +142,7 @@ class Signup < ActiveRecord::Base
 		signup = {}
 		signup['firstname'] = firstName
 		signup['email'] = email
-		signup['lastname'] = lastName
+		signup['lastname'] = lastName unless lastName.nil?
 		signup['twitter_url'] = 'http://twitter.com/'+twitter unless twitter.nil?
 		signup['zip'] = zip
 
