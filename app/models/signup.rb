@@ -5,9 +5,8 @@ class Signup < ActiveRecord::Base
   		:photo_path, :facebook_photo, :source,
 		:sendTweet, :event
 
-	validates_presence_of :email, :firstName, :zip
-
 	attr_accessor :sendTweet, :event
+	validates_presence_of :email, :firstName, :zip
 
   	has_many :statuses
 
@@ -22,6 +21,17 @@ class Signup < ActiveRecord::Base
 			self.photo_date = DateTime.now
 		end
 	end
+
+	def match_or_save
+		match_back = Signup.where( :firstName => self.firstName, :lastName => self.lastName, :email => email, :zip => self.zip, :photo_date => self.photo_date ).first
+		unless match_back
+			return self.save
+		else
+			match_back.touch
+			return true
+		end
+	end
+
 	after_save :send_sync
 	def send_sync
 		Thread.new{ sync } unless complete
