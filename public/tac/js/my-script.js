@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
 		$('.new-user-1').hide()
 		if( typeof config.reps != 'undefined' ) setReps();
 		else getReps(config.zip)
-		openSoundOff({top: '200', message: 'please cosponsor Safe Schools: HR1625/HR1199 & S403/S1088 cc @allycoalition', zip: config.zip, email: config.email, campaign: 59 })
+		openSoundOff({top: '200', message: 'please cosponsor Safe Schools: HR1652/HR1199 & S403/S1088 cc @allycoalition', zip: config.zip, email: config.email, campaign: 59 })
 	}
 
 

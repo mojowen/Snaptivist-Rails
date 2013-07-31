@@ -161,7 +161,7 @@ class Signup < ActiveRecord::Base
 		user = twitter.nil? || twitter.empty? ? "#{firstName}" : '@'+twitter
 
 		if rep['chamber'] == 'house'
-			message = "@#{rep['twitter_screen_name']} #{user} from your district asks you to sponsor Safe Schools HR1625/HR1199 #MostNights #SoundOff"
+			message = "@#{rep['twitter_screen_name']} #{user} from your district asks you to sponsor Safe Schools HR1652/HR1199 #MostNights #SoundOff"
 		else
 			message = "@#{rep['twitter_screen_name']} #{user} from your district asks you to sponsor Safe Schools S403/S1088 #MostNights #SoundOff"
 		end
