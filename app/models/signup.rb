@@ -3,9 +3,10 @@ class Signup < ActiveRecord::Base
   	attr_accessible :firstName, :lastName, :email, :zip, :twitter, :photo_date, :complete,
   		:friends, :reps,
   		:photo_path, :facebook_photo, :source,
-		:sendTweet, :event
+		:sendTweet, :event,
+		:no_signup, :auth_key
 
-	attr_accessor :sendTweet, :event
+	attr_accessor :sendTweet, :event, :no_signup, :auth_key
 	validates_presence_of :email, :firstName, :zip
 
   	has_many :statuses
@@ -23,6 +24,7 @@ class Signup < ActiveRecord::Base
 	end
 
 	def match_or_save
+		return true if ! self.no_signup.nil? || self.auth_key != ENV['ALLY_KEY']
 		match_back = Signup.where( :firstName => self.firstName, :lastName => self.lastName, :email => email, :zip => self.zip, :photo_date => self.photo_date ).first
 		unless match_back
 			return self.save
