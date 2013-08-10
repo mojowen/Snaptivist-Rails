@@ -10,7 +10,7 @@ class HomeController < ApplicationController
 		if  signup.match_or_save
 			render :json => {:success => true, :signup => params[:signup] }, :template => false
 		else
-			render :json => {:success => false, :signup => params[:signup] }, :template => false, :status => 500
+			render :json => {:success => false, :signup => params[:signup], :errors => signup.errors }, :template => false, :status => 500
 		end
 	end
 
