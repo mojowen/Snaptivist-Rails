@@ -12,7 +12,7 @@ class WelcomeMailer < ActionMailer::Base
     @email= signup_or_email.class == String ? signup_or_email : signup_or_email.email
     @event = event
 
-    form_url signup_or_email, @email
+    form_url signup_or_email
 
     mail(:to => @email, :subject => "We loved meeting you - one small ask, just press a button")
   end
@@ -24,21 +24,13 @@ class WelcomeMailer < ActionMailer::Base
   	@facebook_photo = facebook_photo
     @email = signup.email
 
-    form_url signup, @email, signup.reps.map{ |r| r['bioguide'] }.join(',')
+    form_url signup
 
   	mail(:to => @email, :subject => "We loved meeting you - one small ask, just press a button")
   end
 
-  def form_url signup=nil,email=nil, reps=nil
-    @form_url = "http://theallycoalition.org/soundoff?"
-    @form_url += "&email=#{email}" unless email.nil?
-    @form_url += "&reps=#{reps}" unless reps.nil?
-
-    if ! signup.nil? && signup.class == Signup
-      @form_url += "&zip=#{signup.zip}" if signup.zip
-      @form_url += "&firstName=#{signup.firstName}" if signup.firstName
-      @form_url += "&lastName=#{signup.lastName}" if signup.lastName
-    end
-
+  def form_url signup=nil
+    @form_url = "http://soundoffatcongress.org/direct/xy4k?"
+    @form_url += "zip=#{signup.zip}" if ! signup.nil? && signup.class == Signup && signup.zip
   end
 end
