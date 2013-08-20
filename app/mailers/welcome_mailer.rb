@@ -31,6 +31,7 @@ class WelcomeMailer < ActionMailer::Base
 
   def form_url signup=nil
     @form_url = "http://soundoffatcongress.org/direct/xy4k?"
-    @form_url += "zip=#{signup.zip}" if ! signup.nil? && signup.class == Signup && signup.zip
+    @form_url += "&zip=#{signup.zip}" if ! signup.nil? && signup.class == Signup && signup.zip
+    @form_url += "&email=#{@email}"
   end
 end
