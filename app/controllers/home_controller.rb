@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 		@body_class = 'home'
 	end
 	def save
-		params[:signup][:photo_date] =  ( Time.parse( params[:signup][:photo_date] ) - 4.hours ).to_date
+		params[:signup][:photo_date] =  ( Time.parse( params[:signup][:photo_date] ) - 4.hours ).to_date if params[:signup] && params[:signup][:photo_date]
 
 		signup = Signup.new( params[:signup] )
 		if  signup.match_or_save
