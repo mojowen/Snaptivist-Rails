@@ -88,10 +88,10 @@ class Signup < ActiveRecord::Base
 				send_emails
 			end
 		end
-		# save_to_fanbridge
-		# self.complete = true
-		# self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
-		self.delete
+		save_to_fanbridge
+		self.complete = true
+		self.reps = self.reps.map{|r| r['bioguide'] }.join(',') if self.reps.class == Array
+		self.save
 	end
 	before_destroy :remove_aws, :delete_statuses
 	def remove_aws
@@ -134,8 +134,7 @@ class Signup < ActiveRecord::Base
 	end
 
 	def does_send_tweets
-		return false
-		# return ! self.reps.nil? && ! self.reps.empty? && ( self.sendTweet.to_i != 0 rescue false)
+		return ! self.reps.nil? && ! self.reps.empty? && ( self.sendTweet.to_i != 0 rescue false)
 	end
 
 	def send_tweets skip_emails=false
@@ -234,7 +233,7 @@ class Signup < ActiveRecord::Base
 
   	# some methods for deleting photos
   	def fb_me token=nil
-  		if false # ENV['PAGE_ID']
+  		if ENV['PAGE_ID']
   			@token = token || Rails.cache.read('page_token') || ENV['PAGE_TOKEN']
   			@fb_user = FbGraph::Page.new( ENV['PAGE_ID'], :access_token => @token ).fetch
   		else
@@ -247,7 +246,7 @@ class Signup < ActiveRecord::Base
 			fb_me
 		rescue
 			token = RestClient.get('https://graph.facebook.com/oauth/access_token?client_id='+ENV['FACEBOOK']+'&client_secret='+ENV['FACEBOOK_SECRET']+'&grant_type=fb_exchange_token&fb_exchange_token='+ENV['TOKEN']).gsub!('access_token=','')
-			if false # ENV['PAGE_ID']
+			if ENV['PAGE_ID']
 				page_token = JSON::parse( RestClient.get('https://graph.facebook.com/me/accounts?access_token='+token) )
 				token = page_token['data'].find{ |f| f['id'] == ENV['PAGE_ID']}['access_token']
 			end
@@ -258,7 +257,7 @@ class Signup < ActiveRecord::Base
 	end
 	def fb_album album_title, album_description
 		album = @fb_user.albums.find{|f| f.name == album_title }
-		if false # ENV['PAGE_ID']
+		if ENV['PAGE_ID']
 			album = @fb_user.album!( :name => album_title, :message => album_description, :token => @token ) if album.nil?
 		else
 			privacy = {'value' => 'CUSTOM', 'allow' => '40900695,577932694'}
