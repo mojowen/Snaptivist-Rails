@@ -44,6 +44,23 @@ class Signup < ActiveRecord::Base
 				"2013-09-08" => "9/8/2013\tBerkeley,  CA\tGreek # 2",
 				"2013-09-10" => "9/10/2013\tPhoenix,  AZ",
 				"2013-09-12" => "9/12/2013\tDallas,  TX\tGexa Energy Pavill",
+				"2013-09-14" => "9/14/2013\tSt. Augustine,  FL\tMumford Festival",
+				"2013-09-16" => "9/16/2013\tTuscaloosa,  AL\tAmphitheater",
+				"2013-09-18" => "9/18/2013\tBoca Raton,  Fl\tSunset Cove",
+				"2013-09-19" => "9/19/2013\tOrlando,  FL\tUCF Arena",
+				"2013-09-20" => "9/20/2013\tLas Vegas,  NV\tI heart Radio",
+				"2013-09-22" => "9/22/2013\tNashville,  TN\tFontenell",
+				"2013-09-24" => "9/24/2013\tCharleston,  SC\tTennis Center",
+				"2013-09-25" => "9/25/2013\tRaliegh,  NC",
+				"2013-09-26" => "9/26/2013\tCharlottesville,  VA\tnTelos Wireless Pavilion",
+				"2013-09-28" => "9/28/2013\tBridgeport,  CT",
+				"2013-10-04" => "10/4/2013\tAustin,  TX\tACL Festival",
+				"2013-10-05" => "10/5/2013\tNew Orleans,  LA",
+				"2013-10-06" => "10/6/2013\tHouston,  TX",
+				"2013-10-08" => "10/8/2013\tAtlanta,  GA",
+				"2013-10-09" => "10/9/2013\tStarkville,  MS",
+				"2013-10-11" => "10/11/2013\tAustin,  TX\tACL Festival",
+				"2013-10-13" => "10/13/2013\tMexico City,  MEX\tCorona Festival"
 			}
 			self.event = events[ photo_date.to_s ]
 			errors[:event] << 'Could not find event based on that photo date' if self.event.nil?
