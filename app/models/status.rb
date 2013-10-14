@@ -9,7 +9,9 @@ class Status < ActiveRecord::Base
 		tweets = File.read( Dir.glob('tmp-images/*').first ).split(/\r/)
 		tweets.each do |tweet|
 			status = Status.find_by_message_and_sent( tweet.split(',').first.split(' http://t.co/').first, false)
-			status.match_tweet( tweet.split(',').last ) if status
+			begin
+				status.match_tweet( tweet.split(',').last ) if status
+			end
 		end
 	end
 
