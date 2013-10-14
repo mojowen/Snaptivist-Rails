@@ -31,7 +31,7 @@ class Status < ActiveRecord::Base
 		return signup.zip
 	end
 	def sent_at
-		 ( Time.parse( self.data['created_at'] || self.data[:created_at] ) rescue t.updated_at )
+		 ( DateTime.parse( self.data['created_at'] || self.data[:created_at] ) rescue updated_at )
 	end
 
 	def send_tweet
