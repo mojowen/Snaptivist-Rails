@@ -13,6 +13,7 @@ class Status < ActiveRecord::Base
 				status.match_tweet( tweet.split(',').last ) if status
 			rescue
 			end
+			sleep 30
 		end
 	end
 
