@@ -5,11 +5,19 @@ class Status < ActiveRecord::Base
 
 	serialize :data, JSON
 
+	def self.fix_old_tweets
+		tweets = File.read( Dir.glob('tmp-images/*').first ).split(/\r/)
+		tweets.each do |tweet|
+			status = Status.find_by_message_and_sent( tweet.split(',').first.split(' http://t.co/').first, false)
+			status.match_tweet( tweet.split(',').last ) if status
+		end
+	end
+
 	def match_tweet status_id
 		self.data = Twitter.status( status_id )
 		self.sent = true
+		self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } if self.data.to_hash[:entities][:media].first[:url] # Attach the photo URL - already uplaoded to twitter
 		self.save
-		self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } # Attach the photo URL - already uplaoded to twitter
 	end
 	def zip
 		return signup.zip
@@ -29,7 +37,7 @@ class Status < ActiveRecord::Base
 				image.write( file_name )
 
 				self.data = Twitter.update_with_media( self.message, File.new( file_name ) )
-				self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } # Attach the photo URL - already uplaoded to twitter
+				self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } if self.data.to_hash[:entities][:media].first[:url] # Attach the photo URL - already uplaoded to twitter
 
 			else # Photo path is set or there's no photo - either way not doing a media post
 
