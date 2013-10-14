@@ -33,7 +33,13 @@ class Status < ActiveRecord::Base
 
 				require 'RMagick'
 				image = Magick::ImageList.new
-				image.from_blob( open( signup.photo_path.split('?')[0] ).read )
+				begin
+					image.from_blob( open( signup.photo_path.split('?')[0] ).read )
+				rescue
+					# Try facebook for the image
+					facebook = JSON::parse( RestClient.get( 'https://graph.facebook.com/'+signup.facebook_photo.split('fbid=').last ))
+					image.from_blob( open( facebook['source'] ) )
+				end
 				image = image.resize(600,450)
 				file_name = './tmp-images/'+ signup.photo_path.split('?')[0].split('/').last
 				image.write( file_name )
