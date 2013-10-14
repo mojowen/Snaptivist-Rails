@@ -11,6 +11,9 @@ class Status < ActiveRecord::Base
 		self.save
 		self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } # Attach the photo URL - already uplaoded to twitter
 	end
+	def zip
+		return signup.zip
+	end
 
 	def send_tweet
 

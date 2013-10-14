@@ -37,8 +37,8 @@ class HomeController < ApplicationController
 				limit[:conditions] = 'sent IS TRUE'
 				@items = Status.all(limit).reverse
 
-				@mapping = ['target','sender','message','photo_path','updated_at']
-				@title_row = ['target','sender','messsage','photo','sent date']
+				@mapping = ['target','sender','message','photo_path','updated_at','zip']
+				@title_row = ['target','sender','messsage','photo','sent date','from zip']
 
 			when 'emails'
 				@type = 'email'
