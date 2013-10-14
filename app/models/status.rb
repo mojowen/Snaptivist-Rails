@@ -11,6 +11,7 @@ class Status < ActiveRecord::Base
 			status = Status.find_by_message_and_sent( tweet.split(',').first.split(' http://t.co/').first, false)
 			begin
 				status.match_tweet( tweet.split(',').last ) if status
+			rescue
 			end
 		end
 	end
