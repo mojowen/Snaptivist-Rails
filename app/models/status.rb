@@ -28,6 +28,9 @@ class Status < ActiveRecord::Base
 	def zip
 		return signup.zip
 	end
+	def sent_at
+		 ( Time.parse( self.data['created_at'] || self.data[:created_at] ) rescue t.updated_at )
+	end
 
 	def send_tweet
 

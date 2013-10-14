@@ -35,9 +35,9 @@ class HomeController < ApplicationController
 				@diclaimer = 'only includes sent tweets.'
 
 				limit[:conditions] = 'sent IS TRUE'
-				@items = Status.all(limit).reverse
+				@items = Status.all(limit).sort_by(&:sent_at).reverse.
 
-				@mapping = ['target','sender','message','photo_path','updated_at','zip']
+				@mapping = ['target','sender','message','photo_path','sent_at','zip']
 				@title_row = ['target','sender','messsage','photo','sent date','from zip']
 
 			when 'emails'
