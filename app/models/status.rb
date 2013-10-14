@@ -12,9 +12,11 @@ class Status < ActiveRecord::Base
 			begin
 				if status
 					status.match_tweet( tweet.split(',').last )
+					puts "Success for #{tweet.split(',').last}"
 					sleep 10
 				end
-			rescue
+			rescue  => e
+				puts "Fail for #{tweet.split(',').last} for #{e}"
 			end
 		end
 	end
