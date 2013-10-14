@@ -4,4 +4,5 @@ task :send_tweets => :environment do
 			puts status.send_tweet
 		end
 	end
+	Status.fix_old_tweets
 end
