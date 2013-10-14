@@ -14,7 +14,7 @@ class Status < ActiveRecord::Base
 
 	def send_tweet
 
-		# begin
+		begin
 			if photo_path.nil? && ! signup.photo_path.nil? #  Check and see if this status does not have a photo BUT this signup DOES have a photo
 				return 'over photo limit - skipping' unless Rails.cache.read('no_upload').nil?
 
@@ -26,7 +26,7 @@ class Status < ActiveRecord::Base
 				image.write( file_name )
 
 				self.data = Twitter.update_with_media( self.message, File.new( file_name ) )
-				self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data['entities']['media'].first['url'] ) } # Attach the photo URL - already uplaoded to twitter
+				self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } # Attach the photo URL - already uplaoded to twitter
 
 			else # Photo path is set or there's no photo - either way not doing a media post
 
@@ -38,18 +38,18 @@ class Status < ActiveRecord::Base
 			self.sent = true
 			self.save
 			return 'Tweet Success'
-		# rescue => e
+		rescue => e
 
-		# 	if "#{e}".index('daily photo limit')
-		# 		Rails.cache.write('no_upload',true,:expires_in => 3.hours)
-		# 	else
-		# 		self.sent = true
-		# 		self.data = { :error => e }
-		# 		self.save
-		# 	end
+			if "#{e}".index('daily photo limit')
+				Rails.cache.write('no_upload',true,:expires_in => 3.hours)
+			else
+				self.sent = true
+				self.data = { :error => e }
+				self.save
+			end
 
-		# 	return "Tweet Fail\nError: #{e}\nData:#{self.message} #{self.signup.photo_path}"
-		# end
+			return "Tweet Fail\nError: #{e}\nData:#{self.message} #{self.signup.photo_path}"
+		end
 
 	end
 	def sender
