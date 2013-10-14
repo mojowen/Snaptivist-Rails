@@ -15,7 +15,7 @@ class Status < ActiveRecord::Base
 				image = Magick::ImageList.new
 				image.from_blob( open( signup.photo_path.split('?')[0] ).read )
 				image = image.resize(600,450)
-				file_name = '/tmp/images/'+ signup.photo_path.split('?')[0].split('/').last+'.png'
+				file_name = './tmp-images/'+ signup.photo_path.split('?')[0].split('/').last
 				image.write( file_name )
 
 				self.data = Twitter.update_with_media( self.message, File.new( file_name ) )
