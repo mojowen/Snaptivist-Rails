@@ -10,8 +10,10 @@ class Status < ActiveRecord::Base
 		tweets.each do |tweet|
 			status = Status.find_by_message_and_sent( tweet.split(',').first.split(' http://t.co/').first, false)
 			begin
-				status.match_tweet( tweet.split(',').last ) if status
-				sleep 10
+				if status
+					status.match_tweet( tweet.split(',').last )
+					sleep 10
+				end
 			rescue
 			end
 		end
