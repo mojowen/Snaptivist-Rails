@@ -38,7 +38,7 @@ class Status < ActiveRecord::Base
 				rescue
 					# Try facebook for the image
 					facebook = JSON::parse( RestClient.get( 'https://graph.facebook.com/'+signup.facebook_photo.split('fbid=').last ))
-					image.from_blob( open( facebook['source'] ) )
+					image.from_blob( open( facebook['source'] ).read )
 				end
 				image = image.resize(600,450)
 				file_name = './tmp-images/'+ signup.photo_path.split('?')[0].split('/').last
