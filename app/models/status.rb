@@ -25,7 +25,10 @@ class Status < ActiveRecord::Base
 	def match_tweet status_id
 		self.data = Twitter.status( status_id )
 		self.sent = true
-		self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } if self.data.to_hash[:entities][:media].first[:url] # Attach the photo URL - already uplaoded to twitter
+		begin
+			self.signup.statuses.each{ |s| s.update_attributes( :photo_path => self.data.to_hash[:entities][:media].first[:url] ) } # Attach the photo URL - already uplaoded to twitter
+		rescue
+		end
 		self.save
 	end
 	def zip
