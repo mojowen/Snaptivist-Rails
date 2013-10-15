@@ -17,6 +17,7 @@ class Status < ActiveRecord::Base
 				end
 			rescue  => e
 				puts "Fail for #{tweet.split(',').last} for #{e}"
+				sleep 60
 			end
 		end
 	end
