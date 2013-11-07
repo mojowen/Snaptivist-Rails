@@ -1,11 +1,9 @@
 %h1 Analytics
 
 .top_line
-	%h2 Total Signups: #{ @signups.count }
-	%h2 Total Photos: #{ @signups.reject{ |s| s.photo_path.nil? }.count }
-	%h2 Total Emails: #{ @signups.map{|s| (s.friends || '').split(',').length + 1 }.sum }
-	.help (includes friends' emails)
-	%h2 Total Tweets: #{ Status.count }
+	%h2 Total Signups: #{ Signup.count }
+	%h2 Total Photos: #{ Signup.count( :conditions => 'photo_path IS NOT NULL') }
+	%h2 Total Tweets: #{ Status.count( :conditions => {:sent => true} ) }
 
 .signup_options
 	%p
@@ -21,11 +19,10 @@
 
 %h1 Broken-down By Show
 
-- @by_show.each do |show,data|
-	%h2= show || '(No Source Data)'
+- @by_show.each do |data|
+	%h2= data.source || '(No Source Data)'
 
 	.top_line
 		%h3 Signups: #{ data.count }
-		%h3 Photos: #{ data.reject{ |s| s.photo_path.nil? }.count }
-		%h3 Emails: #{data.map{|s| (s.friends || '').split(',').length + 1 }.sum }
-		%h3 Tweets: #{ data.map{ |s| s.statuses.count }.sum }
+		%h3 Photos: #{ data.has_photo }
+		%h3 Tweets: #{ data.tweets }

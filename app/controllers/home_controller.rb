@@ -19,8 +19,12 @@ class HomeController < ApplicationController
 
 	def analytics
 		@title = 'ANALYTICS'
-		@signups = Signup.all
-		@by_show = Signup.all.sort_by(&:photo_date).reverse.group_by( &:source)
+		@by_show = Signup.all(
+			:select => 'COUNT(*) as "count", COUNT(statuses) as "tweets", source, photo_date, COUNT(CASE WHEN signups.photo_path IS NOT NULL THEN 1 ELSE null END) as "has_photo"',
+			:group => 'source, photo_date',
+			:joins => :statuses,
+			:order => "signups.photo_date desc"
+		)
 	end
 	def list
 		if ! params[:export]
